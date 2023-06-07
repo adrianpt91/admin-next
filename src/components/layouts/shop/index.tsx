@@ -7,7 +7,7 @@ import { siteSettings } from '@/settings/site.settings';
 import { useTranslation } from 'next-i18next';
 import MobileNavigation from '@/components/layouts/navigation/mobile-navigation';
 
-const ShopLayout: React.FC = ({ children }) => {
+const ShopLayout: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
   const { t } = useTranslation();
   const {
     query: { shop },
@@ -47,12 +47,12 @@ const ShopLayout: React.FC = ({ children }) => {
       </MobileNavigation>
 
       <div className="flex flex-1 pt-20">
-        <aside className="xl:w-76 ltr:left-0 ltr:right-auto rtl:right-0 rtl:left-auto fixed bottom-0 hidden h-full w-72 overflow-y-auto bg-white px-4 pt-22 shadow lg:block">
+        <aside className="xl:w-76 fixed bottom-0 hidden h-full w-72 overflow-y-auto bg-white px-4 pt-22 shadow ltr:left-0 ltr:right-auto rtl:right-0 rtl:left-auto lg:block">
           <div className="flex flex-col space-y-6 py-3">
             <SidebarItemMap />
           </div>
         </aside>
-        <main className="ltr:lg:pl-72 ltr:xl:pl-76 rtl:lg:pr-72 rtl:xl:pr-76 rtl:lg:pl-0 w-full">
+        <main className="ltr:xl:pl-76 rtl:xl:pr-76 w-full ltr:lg:pl-72 rtl:lg:pr-72 rtl:lg:pl-0">
           <div className="h-full p-5 md:p-8">{children}</div>
         </main>
       </div>

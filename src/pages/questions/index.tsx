@@ -8,6 +8,7 @@ import { SortOrder } from '@/types';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useQuestionsQuery } from '@/data/question';
+import { adminOnly } from '@/utils/auth-utils';
 
 export default function Questions() {
   const [page, setPage] = useState(1);
@@ -31,8 +32,8 @@ export default function Questions() {
 
   return (
     <>
-      <Card className="mb-8 flex flex-col">
-        <div className="flex w-full flex-col items-center md:flex-row">
+      <Card className="flex flex-col mb-8">
+        <div className="flex flex-col items-center w-full md:flex-row">
           <h1 className="text-xl font-semibold text-heading">
             {t('common:sidebar-nav-item-questions')}
           </h1>
@@ -48,6 +49,10 @@ export default function Questions() {
     </>
   );
 }
+
+Questions.authenticate = {
+  permissions: adminOnly,
+};
 Questions.Layout = Layout;
 
 export const getStaticProps = async ({ locale }: any) => ({

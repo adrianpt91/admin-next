@@ -69,7 +69,19 @@ export const userClient = {
       search: HttpClient.formatSearchParams({ name }),
     });
   },
+  fetchAdmins: ({ ...params }: Partial<UserQueryOptions>) => {
+    return HttpClient.get<UserPaginator>(API_ENDPOINTS.ADMIN_LIST, {
+      searchJoin: 'and',
+      ...params,
+    });
+  },
   fetchUser: ({ id }: { id: string }) => {
     return HttpClient.get<User>(`${API_ENDPOINTS.USERS}/${id}`);
   },
+  resendVerificationEmail: () => {
+    return HttpClient.post<any>(API_ENDPOINTS.SEND_VERIFICATION_EMAIL, {});
+  },
+  updateEmail: ({ email }: { email: string }) => {
+    return HttpClient.post<any>(API_ENDPOINTS.UPDATE_EMAIL, { email });
+  }
 };

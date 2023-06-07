@@ -3,7 +3,7 @@ import {
   useModalState,
 } from '@/components/ui/modal/modal.context';
 import AddressForm from '@/components/address/address-form';
-import { AddressType } from '@/types';
+import { AddressType, GoogleMapLocation } from '@/types';
 import { useUpdateUserMutation } from '@/data/user';
 
 type FormValues = {
@@ -17,6 +17,7 @@ type FormValues = {
     zip: string;
     street_address: string;
   };
+  location: GoogleMapLocation;
 };
 
 const CreateOrUpdateAddressForm = () => {

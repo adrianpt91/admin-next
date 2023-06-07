@@ -8,6 +8,7 @@ import { SortOrder } from '@/types';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useReviewsQuery } from '@/data/review';
+import { adminOnly } from '@/utils/auth-utils';
 
 export default function Reviews() {
   const [page, setPage] = useState(1);
@@ -29,8 +30,8 @@ export default function Reviews() {
   }
   return (
     <>
-      <Card className="mb-8 flex flex-col">
-        <div className="flex w-full flex-col items-center md:flex-row">
+      <Card className="flex flex-col mb-8">
+        <div className="flex flex-col items-center w-full md:flex-row">
           <h1 className="text-xl font-semibold text-heading">
             {t('form:input-label-reviews')}
           </h1>
@@ -46,6 +47,9 @@ export default function Reviews() {
     </>
   );
 }
+Reviews.authenticate = {
+  permissions: adminOnly,
+};
 Reviews.Layout = Layout;
 
 export const getStaticProps = async ({ locale }: any) => ({

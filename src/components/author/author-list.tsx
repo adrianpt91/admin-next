@@ -71,7 +71,6 @@ const AuthorList = ({
         <Image
           src={image?.thumbnail ?? siteSettings.product.placeholder}
           alt="coupon banner"
-          layout="fixed"
           width={42}
           height={42}
           className="overflow-hidden rounded"

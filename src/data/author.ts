@@ -33,6 +33,9 @@ export const useCreateAuthorMutation = () => {
     onSettled: () => {
       queryClient.invalidateQueries(API_ENDPOINTS.AUTHORS);
     },
+    onError: (error: any) => {
+      toast.error(t(`common:${error?.response?.data.message}`));
+    },
   });
 };
 
@@ -48,6 +51,9 @@ export const useDeleteAuthorMutation = () => {
     onSettled: () => {
       queryClient.invalidateQueries(API_ENDPOINTS.AUTHORS);
     },
+    onError: (error: any) => {
+      toast.error(t(`common:${error?.response?.data.message}`));
+    },
   });
 };
 
@@ -61,6 +67,9 @@ export const useUpdateAuthorMutation = () => {
     // Always refetch after error or success:
     onSettled: () => {
       queryClient.invalidateQueries(API_ENDPOINTS.AUTHORS);
+    },
+    onError: (error: any) => {
+      toast.error(t(`common:${error?.response?.data.message}`));
     },
   });
 };
