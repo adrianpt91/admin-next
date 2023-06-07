@@ -4,7 +4,6 @@ import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
 import { useMeQuery } from '@/data/user';
 import ShopCard from '@/components/shop/shop-card';
-import NoShopSvg from '../../../public/no-shop.svg';
 
 export default function OwnerDashboard() {
   const { t } = useTranslation();
@@ -31,7 +30,7 @@ export default function OwnerDashboard() {
           <div className="relative h-[180px] w-[300px] sm:h-[370px] sm:w-[490px]">
             <Image
               alt={t('common:text-image')}
-              src={NoShopSvg}
+              src=''
               layout="fill"
               objectFit="cover"
             />
