@@ -331,5 +331,9 @@
   "button-label-add-tag": "添加标签",
   "button-label-update-tag": "更新标签",
   "input-label-min-order-amount": "最低订单金额",
-  "input-label-reviews": "评论"
+  "input-label-reviews": "评论",
+  "form-notification-title": "电子邮件通知",
+  "form-notification-description": "设置消息功能的电子邮件通知",
+  "input-notification-email": "通知邮件",
+  "input-enable-notification": "启用通知"
 }

@@ -16,6 +16,12 @@ import { Order, MappedPaginatorInfo } from '@/types';
 import { useRouter } from 'next/router';
 import StatusColor from '@/components/order/status-color';
 import Badge from '@/components/ui/badge/badge';
+import Button from '@/components/ui/button';
+import { Routes } from '@/config/routes';
+import { ChatIcon } from '@/components/icons/chat';
+import { useCreateConversations } from '@/data/conversations';
+import { SUPER_ADMIN } from '@/utils/constants';
+import { getAuthCredentials } from '@/utils/auth-utils';
 
 type IProps = {
   orders: Order[] | undefined;
@@ -37,7 +43,10 @@ const OrderList = ({
   const { t } = useTranslation();
   const rowExpandable = (record: any) => record.children?.length;
   const { alignLeft } = useIsRTL();
-
+  const { permissions } = getAuthCredentials();
+  const { mutate: createConversations, isLoading: creating } =
+    useCreateConversations();
+  const [loading, setLoading] = useState<boolean | string | undefined>(false);
   const [sortingObj, setSortingObj] = useState<{
     sort: SortOrder;
     column: string | null;
@@ -45,6 +54,15 @@ const OrderList = ({
     sort: SortOrder.Desc,
     column: null,
   });
+
+  const onSubmit = async (shop_id: string | undefined) => {
+    setLoading(shop_id);
+    createConversations({
+      // @ts-ignore
+      shop_id,
+      via: 'admin',
+    });
+  };
 
   const onHeaderClick = (column: string | null) => ({
     onClick: () => {
@@ -155,14 +173,35 @@ const OrderList = ({
       dataIndex: 'id',
       key: 'actions',
       align: 'center',
-      width: 100,
+      width: 220,
       render: (id: string, order: Order) => {
+        const currentButtonLoading = !!loading && loading === order?.shop_id;
         return (
-          <ActionButtons
-            id={id}
-            detailsUrl={`${router.asPath}/${id}`}
-            customLocale={order.language}
-          />
+          <>
+            {/* @ts-ignore */}
+            {order?.children?.length ? (
+              ''
+            ) : (
+              <>
+                {permissions?.includes(SUPER_ADMIN) && order?.shop_id ? (
+                  <button
+                    onClick={() => onSubmit(order?.shop_id)}
+                    disabled={currentButtonLoading}
+                    className="cursor-pointer text-accent transition-colors duration-300 hover:text-accent-hover"
+                  >
+                    <ChatIcon width="19" height="20" />
+                  </button>
+                ) : (
+                  ''
+                )}
+              </>
+            )}
+            <ActionButtons
+              id={id}
+              detailsUrl={`${router.asPath}/${id}`}
+              customLocale={order.language}
+            />
+          </>
         );
       },
     },

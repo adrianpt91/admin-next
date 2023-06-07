@@ -331,5 +331,9 @@
   "button-label-add-tag": "הוסף תגית",
   "button-label-update-tag": "עדכן תג",
   "input-label-min-order-amount": "כמות הזמנה מינימלית",
-  "input-label-reviews": "ביקורות"
+  "input-label-reviews": "ביקורות",
+  "form-notification-title": "הודעת אימייל",
+  "form-notification-description": "הגדר את התכונה של התראה בדואל להעברת הודעות",
+  "input-notification-email": "אפשר הודעה",
+  "input-enable-notification": "אפשר הודעה"
 }

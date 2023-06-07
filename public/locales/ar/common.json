@@ -56,6 +56,7 @@
   "sidebar-nav-item-taxes": "الضرائب",
   "sidebar-nav-item-shippings": "الشحنات",
   "sidebar-nav-item-settings": "إعدادات",
+  "sidebar-nav-item-store-notice": "إشعار المتجر",
   "navbar-add-products": "أضف المنتجات",
   "authorized-nav-item-settings": "إعدادات",
   "authorized-nav-item-profile": "الملف الشخصي",
@@ -324,5 +325,6 @@
   "text-translated-title": "يحرر",
   "text-quantity": "كمية",
   "text-invoice-no": "رقم الفاتورة",
-  "text-date": "تاريخ"
+  "text-date": "تاريخ",
+  "text-message-sent": "تم الارسال"
 }

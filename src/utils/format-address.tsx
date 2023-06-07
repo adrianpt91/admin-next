@@ -11,11 +11,5 @@ export function formatAddress(address: UserAddress) {
     {}
   );
   const formattedAddress = removeFalsy(temp);
-  return Object.values(formattedAddress)?.map((item: any, index) => {
-    return (
-      <span className="single-address truncate" key={index}>
-        {item}
-      </span>
-    );
-  });
+  return Object.values(formattedAddress).join(', ');
 }

@@ -14,6 +14,7 @@ import {
 import ActionButtons from '@/components/common/action-buttons';
 import LanguageListbox from './lang-list-box';
 import { Config } from '@/config';
+import PopOver from '@/components/ui/popover';
 
 export type LanguageSwitcherProps = {
   record: any;
@@ -64,57 +65,83 @@ const LanguageSwitcher = ({
   }, [refs.reference, refs.floating, update]);
 
   return (
-    <div className={`w-full flex items-center justify-end gap-5 ${className}`}>
+    <div className={`flex w-full items-center justify-end gap-5 ${className}`}>
       <ActionButtons
         id={record?.id}
         editUrl={routes.editWithoutLang(slug)}
         deleteModalView={deleteModalView}
       />
       {Config.defaultLanguage === router.locale && (
-        <Popover className="relative inline-block">
-          <Popover.Button
-            className="p-2 text-base transition duration-200 hover:text-heading opacity-80"
-            ref={reference}
-          >
-            <ToggleIcon width={20} />
-          </Popover.Button>
-          <div
-            ref={floating}
-            style={{
-              position: strategy,
-              top: y ?? '',
-              left: x ?? '',
-              zIndex: 1,
-            }}
-          >
-            <Popover.Panel className="px-4 sm:px-0 max-w-[20rem] w-[18rem] bg-[#F7F8F9] shadow-translatePanel rounded overflow-hidden">
-              {options.length ? (
-                <LanguageListbox
-                  title={t('text-non-translated-title')}
-                  items={options}
-                  translate="false"
-                  slug={slug}
-                  id={record?.id}
-                  routes={routes}
-                />
-              ) : (
-                ''
-              )}
-              {filterTranslatedItem.length ? (
-                <LanguageListbox
-                  title={t('text-translated-title')}
-                  items={filterTranslatedItem}
-                  translate="true"
-                  slug={slug}
-                  id={record?.id}
-                  routes={routes}
-                />
-              ) : (
-                ''
-              )}
-            </Popover.Panel>
-          </div>
-        </Popover>
+        // <Popover className="relative inline-block">
+        //   <Popover.Button
+        //     className="p-2 text-base opacity-80 transition duration-200 hover:text-heading"
+        //     ref={reference}
+        //   >
+        //     <ToggleIcon width={20} />
+        //   </Popover.Button>
+        //   <div
+        //     ref={floating}
+        //     style={{
+        //       position: strategy,
+        //       top: y ?? '',
+        //       left: x ?? '',
+        //       zIndex: 1,
+        //     }}
+        //   >
+        //     <Popover.Panel className="w-[18rem] max-w-[20rem] overflow-hidden rounded bg-[#F7F8F9] px-4 shadow-translatePanel sm:px-0">
+        //       {options?.length ? (
+        //         <LanguageListbox
+        //           title={t('text-non-translated-title')}
+        //           items={options}
+        //           translate="false"
+        //           slug={slug}
+        //           id={record?.id}
+        //           routes={routes}
+        //         />
+        //       ) : (
+        //         ''
+        //       )}
+        //       {filterTranslatedItem?.length ? (
+        //         <LanguageListbox
+        //           title={t('text-translated-title')}
+        //           items={filterTranslatedItem}
+        //           translate="true"
+        //           slug={slug}
+        //           id={record?.id}
+        //           routes={routes}
+        //         />
+        //       ) : (
+        //         ''
+        //       )}
+        //     </Popover.Panel>
+        //   </div>
+        // </Popover>
+        <PopOver>
+          {options?.length ? (
+            <LanguageListbox
+              title={t('text-non-translated-title')}
+              items={options}
+              translate="false"
+              slug={slug}
+              id={record?.id}
+              routes={routes}
+            />
+          ) : (
+            ''
+          )}
+          {filterTranslatedItem?.length ? (
+            <LanguageListbox
+              title={t('text-translated-title')}
+              items={filterTranslatedItem}
+              translate="true"
+              slug={slug}
+              id={record?.id}
+              routes={routes}
+            />
+          ) : (
+            ''
+          )}
+        </PopOver>
       )}
     </div>
   );

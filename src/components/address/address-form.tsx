@@ -7,7 +7,10 @@ import { useTranslation } from 'next-i18next';
 import * as yup from 'yup';
 import { useModalState } from '@/components/ui/modal/modal.context';
 import { Form } from '@/components/ui/form/form';
-import { AddressType } from '@/types';
+import { AddressType, GoogleMapLocation } from '@/types';
+import { useSettings } from '@/contexts/settings.context';
+import { Controller } from 'react-hook-form';
+import GooglePlacesAutocomplete from '@/components/form/google-places-autocomplete';
 
 type FormValues = {
   title: string;
@@ -19,6 +22,7 @@ type FormValues = {
     zip: string;
     street_address: string;
   };
+  location: GoogleMapLocation;
 };
 
 const addressSchema = yup.object().shape({
@@ -38,24 +42,34 @@ const addressSchema = yup.object().shape({
 
 const AddressForm: React.FC<any> = ({ onSubmit }) => {
   const { t } = useTranslation('common');
+  const { useGoogleMap } = useSettings();
   const {
     data: { address, type },
   } = useModalState();
   return (
-    <div className="min-h-screen bg-light p-5 sm:p-8 md:min-h-0 md:rounded-xl">
-      <h1 className="mb-4 text-center text-lg font-semibold text-heading sm:mb-6">
+    <div className="min-h-screen p-5 bg-light sm:p-8 md:min-h-0 md:rounded-xl">
+      <h1 className="mb-4 text-lg font-semibold text-center text-heading sm:mb-6">
         {address ? t('text-update') : t('text-add-new')} {t('text-address')}
       </h1>
       <Form<FormValues>
         onSubmit={onSubmit}
         className="grid h-full grid-cols-2 gap-5"
+        //@ts-ignore
         validationSchema={addressSchema}
         options={{
           shouldUnregister: true,
           defaultValues: {
             title: address?.title ?? '',
             type: address?.type ?? type,
-            ...(address?.address && address),
+            address: {
+              city: address?.address?.city ?? '',
+              country: address?.address?.country ?? '',
+              state: address?.address?.state ?? '',
+              zip: address?.address?.zip ?? '',
+              street_address: address?.address?.street_address ?? '',
+              ...address?.address,
+            },
+            location: address?.location ?? '',
           },
         }}
         resetValues={{
@@ -64,11 +78,17 @@ const AddressForm: React.FC<any> = ({ onSubmit }) => {
           ...(address?.address && address),
         }}
       >
-        {({ register, formState: { errors } }) => (
+        {({
+          register,
+          control,
+          getValues,
+          setValue,
+          formState: { errors },
+        }) => (
           <>
             <div>
               <Label>{t('text-type')}</Label>
-              <div className="space-s-4 flex items-center">
+              <div className="flex items-center space-s-4">
                 <Radio
                   id="billing"
                   {...register('type')}
@@ -93,6 +113,33 @@ const AddressForm: React.FC<any> = ({ onSubmit }) => {
               variant="outline"
               className="col-span-2"
             />
+
+            {useGoogleMap && (
+              <div className="col-span-2">
+                <Label>{t('text-location')}</Label>
+                <Controller
+                  control={control}
+                  name="location"
+                  render={({ field: { onChange } }) => (
+                    <GooglePlacesAutocomplete
+                      icon={true}
+                      onChange={(location: any) => {
+                        onChange(location);
+                        setValue('address.country', location?.country);
+                        setValue('address.city', location?.city);
+                        setValue('address.state', location?.state);
+                        setValue('address.zip', location?.zip);
+                        setValue(
+                          'address.street_address',
+                          location?.street_address
+                        );
+                      }}
+                      data={getValues('location')!}
+                    />
+                  )}
+                />
+              </div>
+            )}
 
             <Input
               label={t('text-country')}
@@ -130,7 +177,7 @@ const AddressForm: React.FC<any> = ({ onSubmit }) => {
               className="col-span-2"
             />
 
-            <Button className="col-span-2 w-full">
+            <Button className="w-full col-span-2">
               {address ? t('text-update') : t('text-save')} {t('text-address')}
             </Button>
           </>

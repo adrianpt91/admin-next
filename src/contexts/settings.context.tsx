@@ -4,13 +4,13 @@ export interface State {
 }
 
 const initialState = {
-  siteTitle: 'BBS',
+  siteTitle: 'PickBazar',
   siteSubtitle: '',
   currency: 'USD',
   logo: {
     id: 1,
-    thumbnail: '/logo.png',
-    original: '/logo.png',
+    thumbnail: '/logo.svg',
+    original: '/logo.svg',
   },
 };
 

@@ -9,7 +9,12 @@ import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import ShopLayout from '@/components/layouts/shop';
 import { useRouter } from 'next/router';
-import { adminOwnerAndStaffOnly } from '@/utils/auth-utils';
+import {
+  adminOnly,
+  adminOwnerAndStaffOnly,
+  getAuthCredentials,
+  hasAccess,
+} from '@/utils/auth-utils';
 import { useOrdersQuery } from '@/data/order';
 import { SortOrder } from '@/types';
 import { useShopQuery } from '@/data/shop';
@@ -18,9 +23,13 @@ import { Menu, Transition } from '@headlessui/react';
 import classNames from 'classnames';
 import { MoreIcon } from '@/components/icons/more-icon';
 import { useExportOrderQuery } from '@/data/export';
+import { useMeQuery } from '@/data/user';
+import { Routes } from '@/config/routes';
 
 export default function Orders() {
   const router = useRouter();
+  const { permissions } = getAuthCredentials();
+  const { data: me } = useMeQuery();
   const { locale } = useRouter();
   const {
     query: { shop },
@@ -77,6 +86,14 @@ export default function Orders() {
 
   function handlePagination(current: any) {
     setPage(current);
+  }
+
+  if (
+    !hasAccess(adminOnly, permissions) &&
+    !me?.shops?.map((shop) => shop.id).includes(shopId) &&
+    me?.managed_shop?.id != shopId
+  ) {
+    router.replace(Routes.dashboard);
   }
 
   return (

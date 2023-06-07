@@ -8,12 +8,22 @@ import { SortOrder } from '@/types';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useQuestionsQuery } from '@/data/question';
-import { adminAndOwnerOnly } from '@/utils/auth-utils';
+import {
+  adminAndOwnerOnly,
+  adminOnly,
+  getAuthCredentials,
+  hasAccess,
+} from '@/utils/auth-utils';
 import { useRouter } from 'next/router';
 import { useShopQuery } from '@/data/shop';
+import { Routes } from '@/config/routes';
+import { useMeQuery } from '@/data/user';
 
 export default function Questions() {
   const [page, setPage] = useState(1);
+  const router = useRouter();
+  const { permissions } = getAuthCredentials();
+  const { data: me } = useMeQuery();
   const { t } = useTranslation();
   const [orderBy, setOrder] = useState('created_at');
   const [sortedBy, setColumn] = useState<SortOrder>(SortOrder.Desc);
@@ -36,6 +46,14 @@ export default function Questions() {
 
   function handlePagination(current: any) {
     setPage(current);
+  }
+
+  if (
+    !hasAccess(adminOnly, permissions) &&
+    !me?.shops?.map((shop) => shop.id).includes(shopId) &&
+    me?.managed_shop?.id != shopId
+  ) {
+    router.replace(Routes.dashboard);
   }
 
   return (

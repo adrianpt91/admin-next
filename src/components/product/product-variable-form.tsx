@@ -54,11 +54,11 @@ export default function ProductVariableForm({ shopId, initialValues }: IProps) {
             ? t('form:item-description-update')
             : t('form:item-description-choose')
         } ${t('form:form-description-variation-product-info')}`}
-        className="sm:pe-4 md:pe-5 w-full px-0 pb-5 sm:w-4/12 sm:py-8 md:w-1/3"
+        className="w-full px-0 pb-5 sm:w-4/12 sm:py-8 sm:pe-4 md:w-1/3 md:pe-5"
       />
       <Card className="w-full p-0 sm:w-8/12 md:w-2/3 md:p-0">
         <div className="mb-5 border-t border-dashed border-border-200 md:mb-8">
-          <Title className="mb-0 mt-8 px-5 text-center text-lg uppercase md:px-8">
+          <Title className="mt-8 mb-0 px-5 text-center text-lg uppercase md:px-8">
             {t('form:form-title-options')}
           </Title>
           <div>
@@ -137,7 +137,7 @@ export default function ProductVariableForm({ shopId, initialValues }: IProps) {
                   return (
                     <div
                       key={`fieldAttributeValues-${index}`}
-                      className="mb-5 mt-5 border-b border-dashed border-border-200 p-5 last:mb-8 last:border-0 md:p-8 md:last:pb-0"
+                      className="mt-5 mb-5 border-b border-dashed border-border-200 p-5 last:mb-8 last:border-0 md:p-8 md:last:pb-0"
                     >
                       <Title className="mb-8 !text-lg">
                         {t('form:form-title-variant')}:{' '}
@@ -214,7 +214,7 @@ export default function ProductVariableForm({ shopId, initialValues }: IProps) {
                           multiple={false}
                         />
                       </div>
-                      <div className="mb-5 mt-5">
+                      <div className="mt-5 mb-5">
                         <Checkbox
                           {...register(`variation_options.${index}.is_digital`)}
                           label={t('form:input-label-is-digital')}
@@ -246,7 +246,7 @@ export default function ProductVariableForm({ shopId, initialValues }: IProps) {
                           </div>
                         )}
                       </div>
-                      <div className="mb-5 mt-5">
+                      <div className="mt-5 mb-5">
                         <Checkbox
                           {...register(`variation_options.${index}.is_disable`)}
                           error={t(

@@ -15,7 +15,9 @@ import {
 import { useCreateOrderMutation } from '@/data/order';
 import { PaymentGateway } from '@/types';
 
-export const PlaceOrderAction: React.FC = (props) => {
+export const PlaceOrderAction: React.FC<{
+  children?: React.ReactNode;
+}> = (props) => {
   const { locale, ...router } = useRouter();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { createOrder, isLoading: loading } = useCreateOrderMutation();
@@ -81,7 +83,9 @@ export const PlaceOrderAction: React.FC = (props) => {
       customer_contact,
       customer_id: customer?.value,
       use_wallet_points,
-      payment_gateway: use_wallet_points ? PaymentGateway.FULL_WALLET_PAYMENT : payment_gateway,
+      payment_gateway: use_wallet_points
+        ? PaymentGateway.FULL_WALLET_PAYMENT
+        : payment_gateway,
       billing_address: {
         ...(billing_address?.address && billing_address.address),
       },
@@ -111,7 +115,7 @@ export const PlaceOrderAction: React.FC = (props) => {
     <>
       <Button
         loading={loading}
-        className="mt-5 w-full"
+        className="w-full mt-5"
         onClick={handlePlaceOrder}
         disabled={!isAllRequiredFieldSelected}
         {...props}

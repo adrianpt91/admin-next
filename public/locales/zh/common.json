@@ -56,6 +56,7 @@
   "sidebar-nav-item-taxes": "稅金",
   "sidebar-nav-item-shippings": "出貨量",
   "sidebar-nav-item-settings": "設定值",
+  "sidebar-nav-item-store-notice": "店铺通知",
   "navbar-add-products": "新增產品",
   "authorized-nav-item-settings": "設定值",
   "authorized-nav-item-profile": "輪廓",
@@ -345,5 +346,6 @@
   "text-translated-title": "编辑",
   "text-quantity": "数量",
   "text-invoice-no": "发票号码",
-  "text-date": "日期"
+  "text-date": "日期",
+  "text-message-sent": "消息已发送"
 }

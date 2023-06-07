@@ -22,6 +22,9 @@ import { getIcon } from '@/utils/get-icon';
 import SelectInput from '@/components/ui/select-input';
 import * as socialIcons from '@/components/icons/social';
 import omit from 'lodash/omit';
+import SwitchInput from '@/components/ui/switch-input';
+import { getAuthCredentials } from '@/utils/auth-utils';
+import { SUPER_ADMIN, STORE_OWNER } from '@/utils/constants';
 
 const socialIcon = [
   {
@@ -44,7 +47,7 @@ const socialIcon = [
 
 export const updatedIcons = socialIcon.map((item: any) => {
   item.label = (
-    <div className="space-s-4 flex items-center text-body">
+    <div className="flex items-center text-body space-s-4">
       <span className="flex h-4 w-4 items-center justify-center">
         {getIcon({
           iconList: socialIcons,
@@ -71,6 +74,9 @@ type FormValues = {
 const ShopForm = ({ initialValues }: { initialValues?: any }) => {
   const { mutate: createShop, isLoading: creating } = useCreateShopMutation();
   const { mutate: updateShop, isLoading: updating } = useUpdateShopMutation();
+  // const { permissions } = getAuthCredentials();
+  // let permission = hasAccess(adminAndOwnerOnly, permissions);
+  const { permissions } = getAuthCredentials();
   const {
     register,
     handleSubmit,
@@ -106,7 +112,6 @@ const ShopForm = ({ initialValues }: { initialValues?: any }) => {
     control,
     name: 'settings.socials',
   });
-
   function onSubmit(values: FormValues) {
     const settings = {
       ...values?.settings,
@@ -156,7 +161,7 @@ const ShopForm = ({ initialValues }: { initialValues?: any }) => {
           <Description
             title={t('form:input-label-logo')}
             details={t('form:shop-logo-help-text')}
-            className="sm:pe-4 md:pe-5 w-full px-0 pb-5 sm:w-4/12 sm:py-8 md:w-1/3"
+            className="w-full px-0 pb-5 sm:w-4/12 sm:py-8 sm:pe-4 md:w-1/3 md:pe-5"
           />
 
           <Card className="w-full sm:w-8/12 md:w-2/3">
@@ -168,7 +173,7 @@ const ShopForm = ({ initialValues }: { initialValues?: any }) => {
           <Description
             title={t('form:shop-cover-image-title')}
             details={coverImageInformation}
-            className="sm:pe-4 md:pe-5 w-full px-0 pb-5 sm:w-4/12 sm:py-8 md:w-1/3"
+            className="w-full px-0 pb-5 sm:w-4/12 sm:py-8 sm:pe-4 md:w-1/3 md:pe-5"
           />
 
           <Card className="w-full sm:w-8/12 md:w-2/3">
@@ -179,7 +184,7 @@ const ShopForm = ({ initialValues }: { initialValues?: any }) => {
           <Description
             title={t('form:shop-basic-info')}
             details={t('form:shop-basic-info-help-text')}
-            className="sm:pe-4 md:pe-5 w-full px-0 pb-5 sm:w-4/12 sm:py-8 md:w-1/3"
+            className="w-full px-0 pb-5 sm:w-4/12 sm:py-8 sm:pe-4 md:w-1/3 md:pe-5"
           />
           <Card className="w-full sm:w-8/12 md:w-2/3">
             <Input
@@ -201,7 +206,7 @@ const ShopForm = ({ initialValues }: { initialValues?: any }) => {
           <Description
             title={t('form:shop-payment-info')}
             details={t('form:payment-info-helper-text')}
-            className="sm:pe-4 md:pe-5 w-full px-0 pb-5 sm:w-4/12 sm:py-8 md:w-1/3"
+            className="w-full px-0 pb-5 sm:w-4/12 sm:py-8 sm:pe-4 md:w-1/3 md:pe-5"
           />
 
           <Card className="w-full sm:w-8/12 md:w-2/3">
@@ -238,7 +243,7 @@ const ShopForm = ({ initialValues }: { initialValues?: any }) => {
           <Description
             title={t('form:shop-address')}
             details={t('form:shop-address-helper-text')}
-            className="sm:pe-4 md:pe-5 w-full px-0 pb-5 sm:w-4/12 sm:py-8 md:w-1/3"
+            className="w-full px-0 pb-5 sm:w-4/12 sm:py-8 sm:pe-4 md:w-1/3 md:pe-5"
           />
 
           <Card className="w-full sm:w-8/12 md:w-2/3">
@@ -278,11 +283,45 @@ const ShopForm = ({ initialValues }: { initialValues?: any }) => {
             />
           </Card>
         </div>
+
+        {permissions?.includes(STORE_OWNER) ? (
+          <div className="my-5 flex flex-wrap border-b border-dashed border-border-base pb-8 sm:my-8">
+            <Description
+              title={t('form:form-notification-title')}
+              details={t('form:form-notification-description')}
+              className="w-full px-0 pb-5 sm:w-4/12 sm:py-8 sm:pe-4 md:w-1/3 md:pe-5"
+            />
+
+            <Card className="mb-5 w-full sm:w-8/12 md:w-2/3">
+              <Input
+                label={t('form:input-notification-email')}
+                {...register('settings.notifications.email')}
+                error={t(errors?.settings?.notifications?.email?.message!)}
+                variant="outline"
+                className="mb-5"
+                disabled={permissions?.includes(SUPER_ADMIN)}
+                type="email"
+              />
+              <div className="flex items-center gap-x-4">
+                <SwitchInput
+                  name="settings.notifications.enable"
+                  control={control}
+                  disabled={permissions?.includes(SUPER_ADMIN)}
+                />
+                <Label className="mb-0">
+                  {t('form:input-enable-notification')}
+                </Label>
+              </div>
+            </Card>
+          </div>
+        ) : (
+          ''
+        )}
         <div className="my-5 flex flex-wrap border-b border-dashed border-gray-300 pb-8 sm:my-8">
           <Description
             title={t('form:shop-settings')}
             details={t('form:shop-settings-helper-text')}
-            className="sm:pe-4 md:pe-5 w-full px-0 pb-5 sm:w-4/12 sm:py-8 md:w-1/3"
+            className="w-full px-0 pb-5 sm:w-4/12 sm:py-8 sm:pe-4 md:w-1/3 md:pe-5"
           />
 
           <Card className="w-full sm:w-8/12 md:w-2/3">
@@ -369,7 +408,7 @@ const ShopForm = ({ initialValues }: { initialValues?: any }) => {
           </Card>
         </div>
 
-        <div className="text-end mb-5">
+        <div className="mb-5 text-end">
           <Button
             loading={creating || updating}
             disabled={creating || updating}

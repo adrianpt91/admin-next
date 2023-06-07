@@ -65,5 +65,7 @@
   "table-item-reports": "报告",
   "table-item-message": "信息",
   "table-item-customer-details": "顾客信息",
-  "table-item-feedbacks": "反馈"
+  "table-item-feedbacks": "反馈",
+  "table-item-notice":"注意",
+  "table-item-priority":"优先"
 }
