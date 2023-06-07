@@ -65,7 +65,5 @@
   "table-item-reports": "Informes",
   "table-item-message": "Mensaje",
   "table-item-customer-details": "Detalles del cliente",
-  "table-item-feedbacks": "Comentarios",
-  "table-item-notice":"avisos",
-  "table-item-priority":"prioridad"
+  "table-item-feedbacks": "Comentarios"
 }

@@ -99,15 +99,14 @@ const CategoryList = ({
         if (!image?.thumbnail) return null;
 
         return (
-          <div className="relative mx-auto h-10 w-10">
-            <Image
-              src={image?.thumbnail ?? '/'}
-              alt={name}
-              fill
-              sizes="(max-width: 768px) 100vw"
-              className="overflow-hidden rounded object-fill"
-            />
-          </div>
+          <Image
+            src={image?.thumbnail ?? '/'}
+            alt={name}
+            layout="fixed"
+            width={40}
+            height={40}
+            className="overflow-hidden rounded"
+          />
         );
       },
     },
@@ -189,7 +188,7 @@ const CategoryList = ({
           rowKey="id"
           scroll={{ x: 1000 }}
           expandable={{
-            expandedRowRender: () => ' ',
+            expandedRowRender: () => '',
             rowExpandable: rowExpandable,
           }}
         />

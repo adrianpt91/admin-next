@@ -16,7 +16,7 @@ const ShopCard: React.FC<ShopCardProps> = ({ shop }) => {
     <Link href={`/${shop?.slug}`}>
       <div className="relative flex cursor-pointer items-center rounded border border-gray-200 bg-light p-5">
         {isNew && (
-          <span className="absolute top-2 rounded bg-blue-500 px-2 py-1 text-xs text-light end-2">
+          <span className="end-2 absolute top-2 rounded bg-blue-500 px-2 py-1 text-xs text-light">
             {t('common:text-new')}
           </span>
         )}
@@ -26,13 +26,12 @@ const ShopCard: React.FC<ShopCardProps> = ({ shop }) => {
             src={
               shop?.logo?.thumbnail! ?? '/product-placeholder-borderless.svg'
             }
-            fill
-            sizes="(max-width: 768px) 100vw"
-            className="object-cover"
+            layout="fill"
+            objectFit="cover"
           />
         </div>
 
-        <div className="flex flex-col ms-4">
+        <div className="ms-4 flex flex-col">
           <span className="mb-2 text-lg font-semibold text-heading">
             {shop?.name}
           </span>

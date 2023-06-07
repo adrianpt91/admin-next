@@ -68,6 +68,7 @@ const CustomerList = ({
         <Image
           src={profile?.avatar?.thumbnail ?? siteSettings.avatar.placeholder}
           alt={record?.name}
+          layout="fixed"
           width={42}
           height={42}
           className="overflow-hidden rounded"

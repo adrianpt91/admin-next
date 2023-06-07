@@ -22,7 +22,6 @@ export interface ButtonProps {
   active?: boolean;
   type?: 'submit' | 'reset' | 'button';
   disabled?: boolean;
-  children?: React.ReactNode;
 }
 
 const LinkButton: React.FC<NextLinkProps & ButtonProps> = ({
@@ -50,8 +49,10 @@ const LinkButton: React.FC<NextLinkProps & ButtonProps> = ({
   );
 
   return (
-    <NextLink href={href} {...props} className={cn(rootClassName, className)}>
-      {children}
+    <NextLink href={href}>
+      <a {...props} className={cn(rootClassName, className)}>
+        {children}
+      </a>
     </NextLink>
   );
 };

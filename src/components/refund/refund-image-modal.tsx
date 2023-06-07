@@ -45,14 +45,14 @@ const RefundImageModal = () => {
           {data?.images?.map((item: any) => (
             <SwiperSlide
               key={`refund-gallery-${item.id}`}
-              className="relative flex items-center justify-center selection:bg-transparent"
+              className="flex items-center justify-center selection:bg-transparent"
             >
               <Image
                 src={item?.original ?? '/product-placeholder-borderless.svg'}
                 alt={`Refund gallery ${item.id}`}
                 width={800}
                 height={800}
-                className="object-contain"
+                objectFit="contain"
               />
             </SwiperSlide>
           ))}
@@ -61,7 +61,7 @@ const RefundImageModal = () => {
           <>
             <div
               ref={prevRef}
-              className="refund-gallery-prev absolute top-2/4 z-10 -mt-4 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border border-border-200 border-opacity-70 bg-light text-heading shadow-xl transition-all duration-200 start-2 hover:bg-gray-100 md:-mt-5 md:h-9 md:w-9 md:start-3"
+              className="refund-gallery-prev start-2 md:start-3 absolute top-2/4 z-10 -mt-4 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border border-border-200 border-opacity-70 bg-light text-heading shadow-xl transition-all duration-200 hover:bg-gray-100 md:-mt-5 md:h-9 md:w-9"
             >
               {isRTL ? (
                 <ChevronRight className="h-4 w-4" />
@@ -71,7 +71,7 @@ const RefundImageModal = () => {
             </div>
             <div
               ref={nextRef}
-              className="refund-gallery-next absolute top-2/4 z-10 -mt-4 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border border-border-200 border-opacity-70 bg-light text-heading shadow-xl transition-all duration-200 end-2 hover:bg-gray-100 md:-mt-5 md:h-9 md:w-9 md:end-3"
+              className="refund-gallery-next end-2 md:end-3 absolute top-2/4 z-10 -mt-4 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border border-border-200 border-opacity-70 bg-light text-heading shadow-xl transition-all duration-200 hover:bg-gray-100 md:-mt-5 md:h-9 md:w-9"
             >
               {isRTL ? (
                 <ChevronLeft className="h-4 w-4" />

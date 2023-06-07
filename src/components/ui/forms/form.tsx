@@ -1,5 +1,4 @@
 import type {
-  FieldValues,
   SubmitHandler,
   UseFormReturn,
   UseFormProps,
@@ -13,14 +12,14 @@ import { useEffect } from 'react';
 type ServerErrors<T> = {
   [Property in keyof T]: string;
 };
-type FormProps<TFormValues extends FieldValues> = {
+type FormProps<TFormValues> = {
   onSubmit: SubmitHandler<TFormValues>;
   children: (methods: UseFormReturn<TFormValues>) => React.ReactNode;
   useFormProps?: UseFormProps<TFormValues>;
   validationSchema?: SchemaOf<TFormValues>;
   fieldErrors?: ServerErrors<Partial<TFormValues>> | null;
   formError?: string | string[] | null;
-};
+} & Omit<React.FormHTMLAttributes<HTMLFormElement>, 'onSubmit'>;
 
 const Form = <TFormValues extends Record<string, any> = Record<string, any>>({
   onSubmit,

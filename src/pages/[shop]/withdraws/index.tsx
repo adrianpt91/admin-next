@@ -7,23 +7,13 @@ import WithdrawList from '@/components/withdraw/withdraw-list';
 import LinkButton from '@/components/ui/link-button';
 import ShopLayout from '@/components/layouts/shop';
 import { useRouter } from 'next/router';
-import {
-  adminAndOwnerOnly,
-  adminOnly,
-  getAuthCredentials,
-  hasAccess,
-} from '@/utils/auth-utils';
+import { adminAndOwnerOnly } from '@/utils/auth-utils';
 import { useShopQuery } from '@/data/shop';
 import { useWithdrawsQuery } from '@/data/withdraw';
 import { useState } from 'react';
 import { SortOrder } from '@/types';
-import { Routes } from '@/config/routes';
-import { useMeQuery } from '@/data/user';
 
 export default function WithdrawsPage() {
-  const router = useRouter();
-  const { permissions } = getAuthCredentials();
-  const { data: me } = useMeQuery();
   const { t } = useTranslation();
   const [page, setPage] = useState(1);
   const [orderBy, setOrder] = useState('created_at');
@@ -54,14 +44,6 @@ export default function WithdrawsPage() {
 
   function handlePagination(current: any) {
     setPage(current);
-  }
-
-  if (
-    !hasAccess(adminOnly, permissions) &&
-    !me?.shops?.map((shop) => shop.id).includes(shopId) &&
-    me?.managed_shop?.id != shopId
-  ) {
-    router.replace(Routes.dashboard);
   }
 
   return (

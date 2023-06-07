@@ -331,9 +331,5 @@
   "button-label-add-tag": "Añadir etiqueta",
   "button-label-update-tag": "Actualizar etiqueta",
   "input-label-min-order-amount": "Cantidad mínima de pedido",
-  "input-label-reviews": "Reseñas",
-  "form-notification-title": "Notificación de correo electrónico",
-  "form-notification-description": "Configure su notificación por correo electrónico para la función de mensajería",
-  "input-notification-email": "Correo electrónico de notificación",
-  "input-enable-notification": "Habilitar la notificación"
+  "input-label-reviews": "Reseñas"
 }

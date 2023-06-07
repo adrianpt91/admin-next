@@ -1,4 +1,3 @@
-import StoreNoticeDeleteView from '@/components/store-notice/store-notice-delete-view';
 import Modal from '@/components/ui/modal/modal';
 import dynamic from 'next/dynamic';
 import { MODAL_VIEWS, useModalAction, useModalState } from './modal.context';
@@ -99,9 +98,6 @@ const ProductVariation = dynamic(
   () => import('@/components/product/variation/variation')
 );
 const AbuseReport = dynamic(() => import('@/components/reviews/abuse-report'));
-const ComposerMessage = dynamic(
-  () => import('@/components/message/compose-message')
-);
 
 function renderModal(view: MODAL_VIEWS | undefined, data: any) {
   switch (view) {
@@ -117,8 +113,6 @@ function renderModal(view: MODAL_VIEWS | undefined, data: any) {
       return <CouponDeleteView />;
     case 'DELETE_TAX':
       return <TaxDeleteView />;
-    case 'DELETE_STORE_NOTICE':
-      return <StoreNoticeDeleteView />;
     case 'DELETE_SHIPPING':
       return <ShippingDeleteView />;
     case 'DELETE_TAG':
@@ -169,8 +163,6 @@ function renderModal(view: MODAL_VIEWS | undefined, data: any) {
       return <ReviewImageModal />;
     case 'ABUSE_REPORT':
       return <AbuseReport data={data} />;
-    case 'COMPOSE_MESSAGE':
-      return <ComposerMessage />;
     default:
       return null;
   }

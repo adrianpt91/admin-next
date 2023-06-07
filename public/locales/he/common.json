@@ -56,7 +56,6 @@
   "sidebar-nav-item-taxes": "מיסים",
   "sidebar-nav-item-shippings": "משלוחים",
   "sidebar-nav-item-settings": "הגדרות",
-  "sidebar-nav-item-store-notice": "הודעת חנות",
   "navbar-add-products": "הוסף מוצרים",
   "authorized-nav-item-settings": "הגדרות",
   "authorized-nav-item-profile": "פּרוֹפִיל",
@@ -324,6 +323,5 @@
   "text-translated-title": "לַעֲרוֹך",
   "text-quantity": "כַּמוּת",
   "text-invoice-no": "מס' חשבונית",
-  "text-date": "תַאֲרִיך",
-  "text-message-sent": "הודעה נשלחה"
+  "text-date": "תַאֲרִיך"
 }

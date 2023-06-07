@@ -56,7 +56,6 @@
   "sidebar-nav-item-taxes": "Steuern",
   "sidebar-nav-item-shippings": "Versand",
   "sidebar-nav-item-settings": "Einstellungen",
-  "sidebar-nav-item-store-notice": "Store-Hinweis",
   "navbar-add-products": "Produkte hinzufügen",
   "authorized-nav-item-settings": "die Einstellungen",
   "authorized-nav-item-profile": "Profil",
@@ -324,6 +323,5 @@
   "text-translated-title": "Bearbeiten",
   "text-quantity": "Menge",
   "text-invoice-no": "Rechnungs-Nr",
-  "text-date": "Datum",
-  "text-message-sent": "Nachricht gesendet"
+  "text-date": "Datum"
 }

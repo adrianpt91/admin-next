@@ -64,11 +64,5 @@
   "table-item-reports": "Reports",
   "table-item-message": "Message",
   "table-item-customer-details": "Customer Details",
-  "table-item-feedbacks": "Feedbacks",
-  "table-item-notice": "Notice",
-  "table-item-priority": "Priority",
-  "table-item-receiver": "Receiver",
-  "table-item-effective-from": "Effective From",
-  "table-item-expired-at": "Expired At",
-  "table-item-issued-by": "Issued By"
+  "table-item-feedbacks": "Feedbacks"
 }

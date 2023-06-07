@@ -64,6 +64,7 @@ const ShopList = ({
         <Image
           src={logo?.thumbnail ?? siteSettings.product.placeholder}
           alt={record?.name}
+          layout="fixed"
           width={42}
           height={42}
           className="overflow-hidden rounded"

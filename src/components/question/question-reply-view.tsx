@@ -53,6 +53,7 @@ const QuestionReplyView = () => {
               siteSettings.product.placeholder
             }
             alt={data?.product?.name}
+            layout="fixed"
             width={96}
             height={96}
             className="overflow-hidden rounded object-fill"
@@ -73,7 +74,7 @@ const QuestionReplyView = () => {
       </div>
       <div className="px-7 pt-6 pb-7">
         <div className="mb-4 text-sm font-semibold text-heading md:text-base">
-          <span className="inline-block uppercase me-1">Q:</span>
+          <span className="me-1 inline-block uppercase">Q:</span>
           {data?.question}
         </div>
         <form

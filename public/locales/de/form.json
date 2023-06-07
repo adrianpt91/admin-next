@@ -331,11 +331,5 @@
   "button-label-add-tag": "Tag hinzufügen",
   "button-label-update-tag": "Tag aktualisieren",
   "input-label-min-order-amount": "Mindestbestellwert",
-  "input-label-reviews": "Bewertungen",
-  "input-label-store-notices": "Store-Hinweis",
-  "button-label-add-store-notices": "Store-Hinweis hinzufügen",
-  "form-notification-title": "Email Benachrichtigung",
-  "form-notification-description": "Stellen Sie Ihre E-Mail-Benachrichtigung für die Messaging-Funktion ein",
-  "input-notification-email": "Benachrichtigungsemail",
-  "input-enable-notification": "Aktiviere Benachrichtigungen"
+  "input-label-reviews": "Bewertungen"
 }

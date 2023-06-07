@@ -14,7 +14,6 @@ import { formatAddress } from '@/utils/format-address';
 import {
   adminAndOwnerOnly,
   adminOwnerAndStaffOnly,
-  adminOnly,
   getAuthCredentials,
   hasAccess,
 } from '@/utils/auth-utils';
@@ -30,15 +29,10 @@ import { PriceWalletIcon } from '@/components/icons/shops/price-wallet';
 import { PercentageIcon } from '@/components/icons/shops/percentage';
 import { DollarIcon } from '@/components/icons/shops/dollar';
 import ReadMore from '@/components/ui/truncate';
-import { useMeQuery } from '@/data/user';
-import { Routes } from '@/config/routes';
-import AccessDeniedPage from '@/components/common/access-denied';
 
 export default function ShopPage() {
-  const router = useRouter();
   const { t } = useTranslation();
   const { permissions } = getAuthCredentials();
-  const { data: me } = useMeQuery();
   const {
     query: { shop },
     locale,
@@ -75,16 +69,7 @@ export default function ShopPage() {
     created_at,
     settings,
     slug,
-    id: shop_id,
   } = data ?? {};
-
-  if (
-    !hasAccess(adminOnly, permissions) &&
-    !me?.shops?.map((shop) => shop.id).includes(shop_id) &&
-    me?.managed_shop?.id != shop_id
-  ) {
-    router.replace(Routes.dashboard);
-  }
 
   return (
     <div className="grid grid-cols-12 gap-6">
@@ -95,25 +80,24 @@ export default function ShopPage() {
       )}
       {/* about Shop */}
       <div className="order-2 col-span-12 sm:col-span-6 xl:order-1 xl:col-span-4 3xl:col-span-3">
-        <div className="flex flex-col items-center rounded bg-white px-6 py-8">
+        <div className="flex flex-col items-center rounded bg-white py-8 px-6">
           <div className="relative mb-5 h-36 w-36 rounded-full">
             <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-full border border-gray-100">
               <Image
                 src={logo?.thumbnail ?? '/avatar-placeholder.svg'}
-                fill
-                sizes="(max-width: 768px) 100vw"
-                alt={String(name)}
-                className="object-contain"
+                layout="fill"
+                objectFit="contain"
+                alt={name}
               />
             </div>
 
             {is_active ? (
-              <div className="absolute bottom-4 h-5 w-5 overflow-hidden rounded-full bg-light end-2">
-                <CheckMarkFill width={20} className="text-accent me-2" />
+              <div className="end-2 absolute bottom-4 h-5 w-5 overflow-hidden rounded-full bg-light">
+                <CheckMarkFill width={20} className="me-2 text-accent" />
               </div>
             ) : (
-              <div className="absolute bottom-4 h-5 w-5 overflow-hidden rounded-full bg-light end-2">
-                <CloseFillIcon width={20} className="text-red-500 me-2" />
+              <div className="end-2 absolute bottom-4 h-5 w-5 overflow-hidden rounded-full bg-light">
+                <CloseFillIcon width={20} className="me-2 text-red-500" />
               </div>
             )}
           </div>
@@ -124,11 +108,11 @@ export default function ShopPage() {
           </p>
 
           <div className="mt-5 flex w-full justify-start">
-            <span className="mt-0.5 text-muted-light me-2">
+            <span className="me-2 mt-0.5 text-muted-light">
               <MapPin width={16} />
             </span>
 
-            <address className="flex flex-col text-sm not-italic text-body">
+            <address className="text-sm not-italic text-body flex flex-col">
               {!isEmpty(formatAddress(address!))
                 ? formatAddress(address!)
                 : t('common:text-no-address')}
@@ -136,7 +120,7 @@ export default function ShopPage() {
           </div>
 
           <div className="mt-3 flex w-full justify-start">
-            <span className="mt-0.5 text-muted-light me-2">
+            <span className="me-2 mt-0.5 text-muted-light">
               <PhoneIcon width={16} />
             </span>
             <a href={`tel:${settings?.contact}`} className="text-sm text-body">
@@ -146,15 +130,15 @@ export default function ShopPage() {
             </a>
           </div>
 
-          <div className="mt-7 grid w-full grid-cols-1">
-            <a
+          <div className="mt-16 grid w-full grid-cols-1">
+            {/* <a
               href={`${process.env.NEXT_PUBLIC_SHOP_URL}/${locale}/shops/${slug}`}
               target="_blank"
               className="inline-flex h-12 flex-shrink-0 items-center justify-center rounded !bg-gray-100 px-5 py-0 !font-normal leading-none !text-heading outline-none transition duration-300 ease-in-out hover:!bg-accent hover:!text-light focus:shadow focus:outline-none focus:ring-1 focus:ring-accent-700"
               rel="noreferrer"
             >
               {t('common:text-visit-shop')}
-            </a>
+            </a> */}
           </div>
         </div>
       </div>
@@ -163,10 +147,9 @@ export default function ShopPage() {
       <div className="relative order-1 col-span-12 h-full min-h-[400px] overflow-hidden rounded bg-light xl:order-2 xl:col-span-8 3xl:col-span-9">
         <Image
           src={cover_image?.original ?? '/product-placeholder-borderless.svg'}
-          fill
-          sizes="(max-width: 768px) 100vw"
-          alt={Object(name)}
-          className="object-contain"
+          layout="fill"
+          objectFit="contain"
+          alt={name}
         />
 
         {hasAccess(adminAndOwnerOnly, permissions) && (
@@ -175,7 +158,7 @@ export default function ShopPage() {
             className="absolute top-3 bg-blue-500 shadow-sm hover:bg-blue-600 ltr:right-3 rtl:left-3"
             href={`/${shop}/edit`}
           >
-            <EditIcon className="w-4 me-2" /> {t('common:text-edit-shop')}
+            <EditIcon className="me-2 w-4" /> {t('common:text-edit-shop')}
           </LinkButton>
         )}
       </div>
@@ -189,7 +172,7 @@ export default function ShopPage() {
             </h2>
 
             <div className="border border-gray-100">
-              <div className="flex items-center border-b border-gray-100 px-4 py-3">
+              <div className="flex items-center border-b border-gray-100 py-3 px-4">
                 <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#FC9EC6] p-3 text-light">
                   <CubeIcon width={18} />
                 </div>
@@ -204,7 +187,7 @@ export default function ShopPage() {
                 </div>
               </div>
 
-              <div className="flex items-center px-4 py-3">
+              <div className="flex items-center py-3 px-4">
                 <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#6EBBFD] p-3 text-light">
                   <OrdersIcon width={16} />
                 </div>
@@ -227,7 +210,7 @@ export default function ShopPage() {
             </h2>
 
             <div className="border border-gray-100">
-              <div className="flex items-center border-b border-gray-100 px-4 py-3">
+              <div className="flex items-center border-b border-gray-100 py-3 px-4">
                 <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#C7AF99] p-3 text-light">
                   <PriceWalletIcon width={16} />
                 </div>
@@ -242,7 +225,7 @@ export default function ShopPage() {
                 </div>
               </div>
 
-              <div className="flex items-center px-4 py-3">
+              <div className="flex items-center py-3 px-4">
                 <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#FFA7AE] p-3 text-light">
                   <DollarIcon width={12} />
                 </div>
@@ -265,7 +248,7 @@ export default function ShopPage() {
             </h2>
 
             <div className="border border-gray-100">
-              <div className="flex items-center border-b border-gray-100 px-4 py-3">
+              <div className="flex items-center border-b border-gray-100 py-3 px-4">
                 <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#D59066] p-3 text-light">
                   <PercentageIcon width={16} />
                 </div>

@@ -331,9 +331,5 @@
   "button-label-add-tag": "إضافة علامة",
   "button-label-update-tag": "تحديث العلامة",
   "input-label-min-order-amount": "الحد الأدنى للطلب",
-  "input-label-reviews": "المراجعات",
-  "form-notification-title": "إعلام البريد الإلكتروني",
-  "form-notification-description": "قم بتعيين إشعار البريد الإلكتروني الخاص بك لميزة المراسلة",
-  "input-notification-email": "البريد الإلكتروني الإخطار",
-  "input-enable-notification": "تفعيل الإشعارات"
+  "input-label-reviews": "المراجعات"
 }

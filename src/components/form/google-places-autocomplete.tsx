@@ -1,22 +1,19 @@
 import { Autocomplete, useJsApiLoader } from '@react-google-maps/api';
-import { GoogleMapLocation } from '@/types';
+import { LocationInput } from '@/types';
 import React from 'react';
 import { useTranslation } from 'next-i18next';
 import Loader from '@/components/ui/loader/loader';
-import { MapPin } from '@/components/icons/map-pin';
 
 const libraries: any = ['places'];
 
 export default function GooglePlacesAutocomplete({
   onChange,
   data,
-  disabled = false,
-  icon = false,
+  disabled = false
 }: {
   onChange: any;
-  data: GoogleMapLocation;
-  disabled?: boolean;
-  icon?: boolean;
+  data: LocationInput;
+  disabled?: boolean
 }) {
   const { t } = useTranslation();
   const { isLoaded, loadError } = useJsApiLoader({
@@ -27,12 +24,9 @@ export default function GooglePlacesAutocomplete({
 
   const [autocomplete, setAutocomplete] = React.useState<any>(null);
 
-  const onLoad = React.useCallback(function callback(
-    autocompleteInstance: any
-  ) {
+  const onLoad = React.useCallback(function callback(autocompleteInstance) {
     setAutocomplete(autocompleteInstance);
-  },
-  []);
+  }, []);
 
   const onUnmount = React.useCallback(function callback() {
     setAutocomplete(null);
@@ -65,18 +59,6 @@ export default function GooglePlacesAutocomplete({
           break;
         }
 
-        case 'state_name':
-          location['street_address'] = component.long_name;
-          break;
-
-        case 'route':
-          location['street_address'] = component.long_name;
-          break;
-
-        case 'sublocality_level_1':
-          location['street_address'] = component.long_name;
-          break;
-
         case 'locality':
           location['city'] = component.long_name;
           break;
@@ -99,35 +81,21 @@ export default function GooglePlacesAutocomplete({
     return <div>{t('common:text-map-cant-load')}</div>;
   }
   return isLoaded ? (
-    <div className="relative">
-      {icon && (
-        <div className="absolute top-0 left-0 flex h-12 w-10 items-center justify-center text-gray-400">
-          <MapPin className="w-[18px]" />
-        </div>
-      )}
-
-      <Autocomplete
-        onLoad={onLoad}
-        onPlaceChanged={onPlaceChanged}
-        onUnmount={onUnmount}
-        fields={[
-          'address_components',
-          'geometry.location',
-          'formatted_address',
-        ]}
-        types={['address']}
-      >
-        <input
-          type="text"
-          placeholder={t('form:placeholder-search-location')}
-          defaultValue={data?.formattedAddress!}
-          className={`flex h-12 w-full appearance-none items-center rounded border border-border-base text-sm text-heading transition duration-300 ease-in-out  focus:border-accent focus:outline-none focus:ring-0 ${
-            disabled ? 'cursor-not-allowed border-[#D4D8DD] bg-[#EEF1F4]' : ''
-          } ${icon ? 'pe-4 ps-9' : 'px-4'}`}
-          disabled={disabled}
-        />
-      </Autocomplete>
-    </div>
+    <Autocomplete
+      onLoad={onLoad}
+      onPlaceChanged={onPlaceChanged}
+      onUnmount={onUnmount}
+      fields={['address_components', 'geometry.location', 'formatted_address']}
+      types={['address']}
+    >
+      <input
+        type="text"
+        placeholder={t('form:placeholder-search-location')}
+        defaultValue={data?.formattedAddress!}
+        className={`flex h-12 w-full appearance-none items-center rounded border border-border-base px-4 text-sm text-heading transition duration-300 ease-in-out focus:border-accent focus:outline-none focus:ring-0 ${disabled ? 'cursor-not-allowed bg-[#EEF1F4] border-[#D4D8DD]' : ''}`}
+        disabled={disabled}
+      />
+    </Autocomplete>
   ) : (
     <Loader simple={true} className="h-6 w-6" />
   );

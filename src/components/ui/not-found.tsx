@@ -11,17 +11,16 @@ const NotFound: React.FC<Props> = ({ className, text }) => {
   const { t } = useTranslation('common');
   return (
     <div className={cn('flex flex-col items-center', className)}>
-      <div className="relative flex h-full min-h-[380px] w-full items-center justify-center md:min-h-[450px]">
+      <div className="w-full h-full min-h-[380px] md:min-h-[450px] flex items-center justify-center relative">
         <Image
           src="/no-result.svg"
           alt={text ? t(text) : t('text-no-result-found')}
-          className="h-full w-full object-contain"
-          fill
-          sizes="(max-width: 768px) 100vw"
+          className="w-full h-full object-contain"
+          layout="fill"
         />
       </div>
       {text && (
-        <h3 className="my-7 w-full text-center text-xl font-semibold text-body">
+        <h3 className="w-full text-center text-xl font-semibold text-body my-7">
           {t(text)}
         </h3>
       )}
