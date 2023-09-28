@@ -42,8 +42,6 @@ type FormValues = {
   minimumOrderAmount: number;
   logo: any;
   useOtp: boolean;
-  useGoogleMap: boolean;
-  useMustVerifyEmail: boolean;
   freeShipping: boolean;
   freeShippingAmount: number;
   useCashOnDelivery: boolean;
@@ -102,7 +100,7 @@ const socialIcon = [
 export const updatedIcons = socialIcon.map((item: any) => {
   item.label = (
     <div className="flex items-center text-body space-s-4">
-      <span className="flex items-center justify-center w-4 h-4">
+      <span className="flex h-4 w-4 items-center justify-center">
         {getIcon({
           iconList: socialIcons,
           iconName: item.value,
@@ -227,6 +225,7 @@ export default function SettingsForm({
         },
       },
     });
+    console.log(values, 'valuess');
   }
 
   const paymentGateway = watch('paymentGateway');
@@ -242,7 +241,7 @@ export default function SettingsForm({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="flex flex-wrap pb-8 my-5 border-b border-dashed border-border-base sm:my-8">
+      <div className="my-5 flex flex-wrap border-b border-dashed border-border-base pb-8 sm:my-8">
         <Description
           title={t('form:input-label-logo')}
           details={logoInformation}
@@ -254,7 +253,7 @@ export default function SettingsForm({
         </Card>
       </div>
 
-      <div className="flex flex-wrap pb-8 my-5 border-b border-dashed border-border-base sm:my-8">
+      <div className="my-5 flex flex-wrap border-b border-dashed border-border-base pb-8 sm:my-8">
         <Description
           title={t('form:form-title-information')}
           details={t('form:site-info-help-text')}
@@ -339,19 +338,6 @@ export default function SettingsForm({
           </div>
 
           <div className="mb-5">
-            <div className="flex items-center gap-x-4">
-              <SwitchInput
-                name="useMustVerifyEmail"
-                control={control}
-                disabled={isNotDefaultSettingsPage}
-              />
-              <Label className="mb-0">
-                {t('form:input-label-use-must-verify-email')}
-              </Label>
-            </div>
-          </div>
-
-          <div className="mb-5">
             <Label>{t('form:input-label-tax-class')}</Label>
             <SelectInput
               name="taxClass"
@@ -375,16 +361,14 @@ export default function SettingsForm({
             />
           </div>
 
-          <div className="flex items-center gap-x-4">
+          <div className="mb-5">
+            <Label>{t('form:input-label-enable-free-shipping')}</Label>
             <SwitchInput
               name="freeShipping"
               control={control}
               checked={enableFreeShipping}
               disabled={isNotDefaultSettingsPage}
             />
-            <Label className="mb-0">
-              {t('form:input-label-enable-free-shipping')}
-            </Label>
           </div>
 
           {enableFreeShipping && (
@@ -394,14 +378,14 @@ export default function SettingsForm({
               error={t(errors.freeShippingAmount?.message!)}
               variant="outline"
               type="number"
-              className="mt-5"
+              className="mb-5"
               disabled={isNotDefaultSettingsPage}
             />
           )}
         </Card>
       </div>
 
-      <div className="flex flex-wrap pb-8 my-5 border-b border-dashed border-border-base sm:my-8">
+      <div className="my-5 flex flex-wrap border-b border-dashed border-border-base pb-8 sm:my-8">
         <Description
           title={t('Payment')}
           details={t('Configure Payment Option')}
@@ -445,7 +429,7 @@ export default function SettingsForm({
         </Card>
       </div>
 
-      <div className="flex flex-wrap pb-8 my-5 border-b border-dashed border-border-base sm:my-8">
+      <div className="my-5 flex flex-wrap border-b border-dashed border-border-base pb-8 sm:my-8">
         <Description
           title="SEO"
           details={t('form:tax-form-seo-info-help-text')}
@@ -510,7 +494,7 @@ export default function SettingsForm({
         </Card>
       </div>
 
-      <div className="flex flex-wrap my-5 sm:my-8">
+      <div className="my-5 flex flex-wrap sm:my-8">
         <Description
           title={t('form:text-delivery-schedule')}
           details={t('form:delivery-schedule-help-text')}
@@ -521,7 +505,7 @@ export default function SettingsForm({
           <div>
             {fields.map((item: any & { id: string }, index: number) => (
               <div
-                className="py-5 border-b border-dashed border-border-200 first:pt-0 last:border-0 md:py-8"
+                className="border-b border-dashed border-border-200 py-5 first:pt-0 last:border-0 md:py-8"
                 key={item.id}
               >
                 <div className="grid grid-cols-1 gap-5 sm:grid-cols-5">
@@ -579,7 +563,7 @@ export default function SettingsForm({
         </Card>
       </div>
 
-      <div className="flex flex-wrap pb-8 my-5 border-b border-gray-300 border-dashed sm:my-8">
+      <div className="my-5 flex flex-wrap border-b border-dashed border-gray-300 pb-8 sm:my-8">
         <Description
           title={t('form:shop-settings')}
           details={t('form:shop-settings-helper-text')}
@@ -618,25 +602,12 @@ export default function SettingsForm({
             disabled={isNotDefaultSettingsPage}
           />
 
-          <div className="mt-6">
-            <div className="flex items-center gap-x-4">
-              <SwitchInput
-                name="useGoogleMap"
-                control={control}
-                disabled={isNotDefaultSettingsPage}
-              />
-              <Label className="mb-0">
-                {t('form:input-label-use-google-map-service')}
-              </Label>
-            </div>
-          </div>
-
           {/* Social and Icon picker */}
           <div>
             {socialFields.map(
               (item: ShopSocialInput & { id: string }, index: number) => (
                 <div
-                  className="py-5 border-b border-dashed border-border-200 first:mt-5 first:border-t last:border-b-0 md:py-8 md:first:mt-10"
+                  className="border-b border-dashed border-border-200 py-5 first:mt-5 first:border-t last:border-b-0 md:py-8 md:first:mt-10"
                   key={item.id}
                 >
                   <div className="grid grid-cols-1 gap-5 sm:grid-cols-5">

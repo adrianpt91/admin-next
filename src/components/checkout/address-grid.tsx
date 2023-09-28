@@ -10,7 +10,7 @@ import { Address } from '@/types';
 interface AddressesProps {
   addresses: Address[] | undefined;
   label: string;
-  atom: WritableAtom<Address | null, any, Address>;
+  atom: WritableAtom<Address | null, Address>;
   className?: string;
   userId: string;
   count: number;

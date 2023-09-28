@@ -5,7 +5,7 @@ const DefaultSeo = () => {
   const settings = useSettings();
   return (
     <NextDefaultSeo
-      title={settings.siteTitle ?? 'PickBazar'}
+      title='BBS'
       titleTemplate={`%s | ${settings?.seo?.metaTitle ?? 'E-Commerce'}`}
       description={settings?.seo?.metaDescription || settings?.siteSubtitle}
       canonical={settings?.seo?.canonicalUrl}

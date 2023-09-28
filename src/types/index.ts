@@ -20,17 +20,6 @@ export enum ProductType {
   Simple = 'simple',
   Variable = 'variable',
 }
-export enum StoreNoticePriorityType {
-  High = 'high',
-  Medium = 'medium',
-  Low = 'low',
-}
-export enum StoreNoticeType {
-  all_vendor = 'all_vendor',
-  specific_vendor = 'specific_vendor',
-  all_shop = 'all_shop',
-  specific_shop = 'specific_shop',
-}
 
 export enum PaymentGateway {
   STRIPE = 'STRIPE',
@@ -40,10 +29,6 @@ export enum PaymentGateway {
   PAYPAL = 'PAYPAL',
   MOLLIE = 'MOLLIE',
   RAZORPAY = 'RAZORPAY',
-  PAYSTACK = 'PAYSTACK',
-  XENDIT = 'XENDIT',
-  SSLCOMMERZ = 'SSLCOMMERZ',
-  IYZICO = 'IYZICO',
 }
 
 export enum ProductStatus {
@@ -99,10 +84,6 @@ export enum PaymentStatus {
   COD = 'payment-cash-on-delivery',
 }
 
-export interface NameAndValueType {
-  name: string;
-  value: string;
-}
 export enum Permission {
   SuperAdmin = 'super_admin',
   StoreOwner = 'store_owner',
@@ -336,10 +317,6 @@ export interface ShopSettings {
   contact?: string;
   location?: Location;
   website?: string;
-  notifications: {
-    email: string;
-    enable: boolean;
-  };
 }
 
 export interface Location {
@@ -381,7 +358,6 @@ export interface User {
   profile?: Profile;
   address: Address[];
   orders?: OrderPaginator;
-  email_verified: boolean;
 }
 
 export interface UpdateUser {
@@ -411,7 +387,6 @@ export interface Address {
   address?: UserAddress;
   type?: string;
   customer?: User;
-  location: GoogleMapLocation;
 }
 
 export interface Coupon {
@@ -441,42 +416,6 @@ export interface CouponInput {
   language?: string;
 }
 
-export interface StoreNotice {
-  id: string;
-  translated_languages: string[];
-  priority: StoreNoticePriorityType;
-  notice: string;
-  description?: string;
-  effective_from?: string;
-  expired_at: string;
-  type?: string;
-  is_read?: boolean;
-  shops?: Shop[];
-  users?: User[];
-  received_by?: string;
-  created_by: string;
-  expire_at: string;
-  created_at: string;
-  creator_role: string;
-  updated_at: string;
-  deleted_at?: string;
-  creator?: any;
-}
-
-export interface StoreNoticeInput {
-  priority: string;
-  notice: string;
-  description?: string;
-  effective_from?: string;
-  expired_at: string;
-  type: string;
-  received_by?: string[];
-}
-
-export interface StoreNoticeUserToNotifyInput {
-  type: string;
-}
-
 export interface Order {
   id: string;
   tracking_number: string;
@@ -503,7 +442,6 @@ export interface Order {
   language: string;
   order_status: string;
   payment_status: string;
-  shop_id?: string;
 }
 
 export interface OrderProductPivot {
@@ -853,15 +791,6 @@ export interface CreateAbuseReportInput {
   message: string;
 }
 
-export interface CreateMessageInput {
-  message: string;
-  id: string;
-  shop_id: string;
-}
-export interface CreateMessageSeenInput {
-  id: string;
-}
-
 export interface Tax {
   id?: string;
   name?: string;
@@ -873,7 +802,6 @@ export interface SettingsOptions {
   siteSubtitle?: string;
   currency?: string;
   useOtp?: boolean;
-  useGoogleMap?: boolean;
   freeShipping?: boolean;
   contactDetails?: ContactDetails;
   minimumOrderAmount?: number;
@@ -905,31 +833,6 @@ export interface Location {
   country?: string;
   zip?: string;
   formattedAddress?: string;
-}
-
-export interface LatestMessage {
-  body: string;
-  conversation_id: string;
-  created_at: string;
-  updated_at: string;
-  user_id: string;
-  id: string;
-}
-
-export interface Conversations {
-  id: string;
-  created_at: string;
-  updated_at: string;
-  shop_id: number;
-  unseen: boolean;
-  user_id: string;
-  user: User;
-  shop: Shop;
-  latest_message: LatestMessage;
-}
-
-export interface Message extends LatestMessage {
-  conversation: Conversations;
 }
 
 export interface ShopSocials {
@@ -1157,9 +1060,6 @@ export declare type ApproveShopInput = {
 export interface LocationInput {
   lat?: number;
   lng?: number;
-  street_number?: string;
-  route?: string;
-  street_address?: string;
   city?: string;
   state?: string;
   country?: string;
@@ -1241,10 +1141,6 @@ export interface CategoryQueryOptions extends QueryOptions {
   type: string;
   name: string;
   parent: number | null;
-}
-
-export interface ConversationQueryOptions extends QueryOptions {
-  search?: string;
 }
 
 export interface TagQueryOptions extends QueryOptions {
@@ -1352,14 +1248,6 @@ export interface OrderQueryOptions extends QueryOptions {
 export interface CouponQueryOptions extends QueryOptions {
   code: string;
 }
-export interface StoreNoticeQueryOptions extends QueryOptions {
-  notice: string;
-  shop_id: string;
-}
-
-export interface MessageQueryOptions extends QueryOptions {
-  slug: string;
-}
 
 export interface QuestionQueryOptions extends Omit<QueryOptions, 'language'> {
   name: string;
@@ -1381,77 +1269,43 @@ export interface ShopQueryOptions extends Omit<QueryOptions, 'language'> {
   parent: number | null;
 }
 
-export interface GoogleMapLocation {
-  lat?: number;
-  lng?: number;
-  street_number?: string;
-  route?: string;
-  street_address?: string;
-  city?: string;
-  state?: string;
-  country?: string;
-  zip?: string;
-  formattedAddress?: string;
-}
+export interface ShopPaginator extends PaginatorInfo<Shop> { }
 
-export interface ShopPaginator extends PaginatorInfo<Shop> {}
+export interface WithdrawPaginator extends PaginatorInfo<Withdraw> { }
 
-export interface WithdrawPaginator extends PaginatorInfo<Withdraw> {}
+export interface UserPaginator extends PaginatorInfo<User> { }
 
-export interface UserPaginator extends PaginatorInfo<User> {}
+export interface QuestionPaginator extends PaginatorInfo<Question> { }
 
-export interface QuestionPaginator extends PaginatorInfo<Question> {}
+export interface QuestionPaginator extends PaginatorInfo<Question> { }
 
-export interface QuestionPaginator extends PaginatorInfo<Question> {}
+export interface StaffPaginator extends PaginatorInfo<User> { }
 
-export interface StaffPaginator extends PaginatorInfo<User> {}
+export interface OrderPaginator extends PaginatorInfo<Order> { }
 
-export interface OrderPaginator extends PaginatorInfo<Order> {}
-
-export interface CouponPaginator extends PaginatorInfo<Coupon> {}
-
-export interface StoreNoticePaginator extends PaginatorInfo<StoreNotice> { }
+export interface CouponPaginator extends PaginatorInfo<Coupon> { }
 
 export interface ProductPaginator extends PaginatorInfo<Product> { }
 
-export interface CategoryPaginator extends PaginatorInfo<Category> {}
+export interface CategoryPaginator extends PaginatorInfo<Category> { }
 
-export interface TaxPaginator extends PaginatorInfo<Tax> {}
+export interface TaxPaginator extends PaginatorInfo<Tax> { }
 
-export interface ReviewPaginator extends PaginatorInfo<Review> {}
+export interface ReviewPaginator extends PaginatorInfo<Review> { }
 
-export interface TagPaginator extends PaginatorInfo<Tag> {}
+export interface TagPaginator extends PaginatorInfo<Tag> { }
 
-export interface AttributePaginator extends PaginatorInfo<Attribute> {}
+export interface AttributePaginator extends PaginatorInfo<Attribute> { }
 
-export interface TaxPaginator extends PaginatorInfo<Tax> {}
-
-export interface ReviewPaginator extends PaginatorInfo<Review> {}
-
-export interface TagPaginator extends PaginatorInfo<Tag> {}
-
-export interface AttributePaginator extends PaginatorInfo<Attribute> {}
 export interface AttributeValuePaginator
-  extends PaginatorInfo<AttributeValue> {}
+  extends PaginatorInfo<AttributeValue> { }
 
-export interface ShippingPaginator extends PaginatorInfo<Shipping> {}
+export interface ShippingPaginator extends PaginatorInfo<Shipping> { }
 
-export interface AuthorPaginator extends PaginatorInfo<Author> {}
+export interface AuthorPaginator extends PaginatorInfo<Author> { }
 
-export interface ManufacturerPaginator extends PaginatorInfo<Manufacturer> {}
+export interface ManufacturerPaginator extends PaginatorInfo<Manufacturer> { }
 
-export interface OrderStatusPaginator extends PaginatorInfo<OrderStatus> {}
+export interface OrderStatusPaginator extends PaginatorInfo<OrderStatus> { }
 
-export interface ShippingPaginator extends PaginatorInfo<Shipping> {}
-
-export interface AuthorPaginator extends PaginatorInfo<Author> {}
-
-export interface ManufacturerPaginator extends PaginatorInfo<Manufacturer> {}
-
-export interface OrderStatusPaginator extends PaginatorInfo<OrderStatus> {}
-
-export interface ConversionPaginator extends PaginatorInfo<Conversations> {}
-
-export interface MessagePaginator extends PaginatorInfo<Message> {}
-
-export interface WithdrawPaginator extends PaginatorInfo<Withdraw> {}
+export interface WithdrawPaginator extends PaginatorInfo<Withdraw> { }

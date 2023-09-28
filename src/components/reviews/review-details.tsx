@@ -134,14 +134,15 @@ const ReviewDetailsView = ({ review }: IProps) => {
         <div className="relative h-20 w-20 shrink-0 border border-gray-200">
           <Image
             src={image?.thumbnail ?? siteSettings.product.placeholder}
-            alt={String(name)}
+            alt={name}
+            layout="responsive"
             width={75}
             height={75}
             className="overflow-hidden rounded"
           />
         </div>
 
-        <div className="flex flex-col space-y-1.5 pe-4 md:pe-5">
+        <div className="pe-4 md:pe-5 flex flex-col space-y-1.5">
           <Link
             href={process.env.NEXT_PUBLIC_SHOP_URL + '/products/' + slug}
             className="text-lg font-semibold text-heading transition-colors hover:text-accent hover:no-underline focus:text-accent-700 focus:no-underline"
@@ -165,7 +166,7 @@ const ReviewDetailsView = ({ review }: IProps) => {
                 {currentPrice}
               </span>
               {basePrice && (
-                <del className="text-xs text-muted ms-2 md:text-sm">
+                <del className="ms-2 text-xs text-muted md:text-sm">
                   {basePrice}
                 </del>
               )}
@@ -175,7 +176,7 @@ const ReviewDetailsView = ({ review }: IProps) => {
 
         <div className="!ml-auto inline-flex shrink-0 items-center rounded-full border border-accent px-3 py-0.5 text-base text-accent">
           {ratings}
-          <StarIcon className="h-3 w-3 ms-1" />
+          <StarIcon className="ms-1 h-3 w-3" />
         </div>
       </div>
 
@@ -184,7 +185,7 @@ const ReviewDetailsView = ({ review }: IProps) => {
         <div className="mb-5 flex items-center justify-between">
           <div className="inline-flex shrink-0 items-center rounded-full border border-accent px-3 py-0.5 text-base text-accent">
             {rating}
-            <StarIcon className="h-3 w-3 ms-1" />
+            <StarIcon className="ms-1 h-3 w-3" />
           </div>
 
           {/* Accept/decline buttons */}
@@ -219,7 +220,7 @@ const ReviewDetailsView = ({ review }: IProps) => {
         </div>
         <p className="text-sm leading-6 text-heading">{comment}</p>
         {photos && !isEmpty(photos) && (
-          <div className="flex items-start pt-3 space-s-2">
+          <div className="space-s-2 flex items-start pt-3">
             {photos?.map((photo: any, idx: any) => (
               <div className="mb-1" key={idx}>
                 <Image
@@ -242,11 +243,11 @@ const ReviewDetailsView = ({ review }: IProps) => {
         )}
         <div className="mt-4 flex items-center space-x-4 rtl:space-x-reverse">
           <span className="flex items-center text-xs tracking-wider text-gray-400 transition">
-            <LikeIcon className="h-4 w-4 me-1.5" />
+            <LikeIcon className="me-1.5 h-4 w-4" />
             {positive_feedbacks_count}
           </span>
           <span className="flex items-center text-xs tracking-wider text-gray-400 transition">
-            <DislikeIcon className="h-4 w-4 me-1.5" />
+            <DislikeIcon className="me-1.5 h-4 w-4" />
             {negative_feedbacks_count}
           </span>
         </div>

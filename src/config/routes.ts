@@ -13,7 +13,6 @@ export const Routes = {
   storeKeepers: '/vendor/store_keepers',
   profileUpdate: '/profile-update',
   checkout: '/orders/checkout',
-  verifyEmail: '/verify-email',
   user: {
     ...routesFactory('/users'),
   },
@@ -82,21 +81,6 @@ export const Routes = {
   },
   question: {
     ...routesFactory('/questions'),
-  },
-  message: {
-    ...routesFactory('/message'),
-  },
-  shopMessage: {
-    ...routesFactory('/shop-message'),
-  },
-  conversations: {
-    ...routesFactory('/message/conversations'),
-  },
-  storeNotice: {
-    ...routesFactory('/store-notices'),
-  },
-  storeNoticeRead: {
-    ...routesFactory('/store-notices/read'),
   },
 };
 

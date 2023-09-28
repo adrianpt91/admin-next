@@ -20,18 +20,12 @@ const Avatar: React.FC<AvatarProps> = ({
   return (
     <div
       className={cn(
-        'relative h-10 w-10 cursor-pointer overflow-hidden rounded-full border border-border-100',
+        'relative cursor-pointer w-10 h-10 overflow-hidden rounded-full border border-border-100',
         className
       )}
       {...rest}
     >
-      <Image
-        alt={alt}
-        src={src}
-        fill
-        priority={true}
-        sizes="(max-width: 768px) 100vw"
-      />
+      <Image alt={alt} src={src} layout="fill" priority={true} />
     </div>
   );
 };

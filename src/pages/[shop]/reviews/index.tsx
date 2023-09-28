@@ -8,21 +8,11 @@ import { SortOrder } from '@/types';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useReviewsQuery } from '@/data/review';
-import {
-  adminAndOwnerOnly,
-  adminOnly,
-  getAuthCredentials,
-  hasAccess,
-} from '@/utils/auth-utils';
+import { adminAndOwnerOnly } from '@/utils/auth-utils';
 import { useShopQuery } from '@/data/shop';
 import { useRouter } from 'next/router';
-import { Routes } from '@/config/routes';
-import { useMeQuery } from '@/data/user';
 
 export default function Reviews() {
-  const router = useRouter();
-  const { permissions } = getAuthCredentials();
-  const { data: me } = useMeQuery();
   const [page, setPage] = useState(1);
   const { t } = useTranslation();
   const [orderBy, setOrder] = useState('created_at');
@@ -50,14 +40,6 @@ export default function Reviews() {
 
   function handlePagination(current: any) {
     setPage(current);
-  }
-
-  if (
-    !hasAccess(adminOnly, permissions) &&
-    !me?.shops?.map((shop) => shop.id).includes(shopId) &&
-    me?.managed_shop?.id != shopId
-  ) {
-    router.replace(Routes.dashboard);
   }
 
   return (

@@ -11,23 +11,13 @@ import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { Routes } from '@/config/routes';
 import ShopLayout from '@/components/layouts/shop';
-import {
-  adminOnly,
-  adminOwnerAndStaffOnly,
-  getAuthCredentials,
-  hasAccess,
-} from '@/utils/auth-utils';
+import { adminOwnerAndStaffOnly } from '@/utils/auth-utils';
 import { useRouter } from 'next/router';
 import { SortOrder } from '@/types';
 import { useManufacturersQuery } from '@/data/manufacturer';
 import { Config } from '@/config';
-import { useMeQuery } from '@/data/user';
-import { useShopQuery } from '@/data/shop';
 
 export default function Manufacturers() {
-  const router = useRouter();
-  const { permissions } = getAuthCredentials();
-  const { data: me } = useMeQuery();
   const { t } = useTranslation();
   const {
     query: { shop },
@@ -46,12 +36,6 @@ export default function Manufacturers() {
       page,
       language: locale,
     });
-
-  const { data: shopData } = useShopQuery({
-    slug: shop as string,
-  });
-  const { id: shop_id } = shopData ?? {};
-
   if (loading) return <Loader text={t('common:text-loading')} />;
   if (error) return <ErrorMessage message={error.message} />;
 
@@ -61,14 +45,6 @@ export default function Manufacturers() {
 
   function handlePagination(current: number) {
     setPage(current);
-  }
-
-  if (
-    !hasAccess(adminOnly, permissions) &&
-    !me?.shops?.map((shop) => shop.id).includes(shop_id) &&
-    me?.managed_shop?.id != shop_id
-  ) {
-    router.replace(Routes.dashboard);
   }
 
   return (

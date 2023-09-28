@@ -132,6 +132,7 @@ export default function RefundDetailsView({
         <Image
           src={image?.thumbnail ?? siteSettings.product.placeholder}
           alt="alt text"
+          layout="fixed"
           width={50}
           height={50}
         />
@@ -169,7 +170,7 @@ export default function RefundDetailsView({
   return (
     <Card>
       <div className="flex flex-col items-center lg:flex-row">
-        <h3 className="mb-8 w-full whitespace-nowrap text-center text-2xl font-semibold text-heading lg:mb-0 lg:w-1/3 lg:text-start">
+        <h3 className="lg:text-start mb-8 w-full whitespace-nowrap text-center text-2xl font-semibold text-heading lg:mb-0 lg:w-1/3">
           {t('common:text-refund-id')} - {refund?.id} (
           <span className="inline-block lowercase first-letter:uppercase">
             {refund?.status}
@@ -180,9 +181,9 @@ export default function RefundDetailsView({
         {refund?.status && canChangeStatus && (
           <form
             onSubmit={handleSubmit(handleUpdateRefundStatus)}
-            className="flex w-full flex-col ms-auto sm:flex-row sm:justify-end lg:w-2/3 xl:w-1/2"
+            className="ms-auto flex w-full flex-col sm:flex-row sm:justify-end lg:w-2/3 xl:w-1/2"
           >
-            <div className="z-20 w-full me-5 lg:max-w-[280px]">
+            <div className="me-5 z-20 w-full lg:max-w-[280px]">
               <SelectInput
                 name="status"
                 control={control}
@@ -292,15 +293,17 @@ export default function RefundDetailsView({
             {refund?.images?.map((img: any, idx: number) => (
               <div
                 key={img?.id}
-                className="relative cursor-pointer rounded-lg bg-gray-100"
+                className="cursor-pointer rounded-lg bg-gray-100"
                 onClick={() => handleImageClick(idx)}
               >
                 <Image
                   src={img?.original ?? '/'}
                   alt={refund?.title!}
+                  layout="responsive"
                   width={400}
                   height={400}
-                  className="overflow-hidden rounded object-contain"
+                  objectFit="contain"
+                  className="overflow-hidden rounded"
                 />
               </div>
             ))}
@@ -331,7 +334,7 @@ export default function RefundDetailsView({
           <span>{t('common:no-order-found')}</span>
         )}
 
-        <div className="flex w-full flex-col space-y-2 border-t-4 border-double border-border-200 py-4 ms-auto sm:w-1/2 sm:px-4 md:w-1/3">
+        <div className="ms-auto flex w-full flex-col space-y-2 border-t-4 border-double border-border-200 py-4 sm:w-1/2 sm:px-4 md:w-1/3">
           <div className="flex items-center justify-between text-sm text-body">
             <span>{t('common:order-sub-total')}</span>
             <span>{subtotal}</span>
@@ -356,7 +359,7 @@ export default function RefundDetailsView({
       </div>
 
       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between">
-        <div className="mb-10 w-full sm:mb-0 sm:w-1/2 sm:pe-8">
+        <div className="sm:pe-8 mb-10 w-full sm:mb-0 sm:w-1/2">
           <h3 className="mb-3 border-b border-border-200 pb-2 font-semibold text-heading">
             {t('common:billing-address')}
           </h3>
@@ -372,12 +375,12 @@ export default function RefundDetailsView({
           </div>
         </div>
 
-        <div className="w-full sm:w-1/2 sm:ps-8">
-          <h3 className="mb-3 border-b border-border-200 pb-2 font-semibold text-heading text-start sm:text-end">
+        <div className="sm:ps-8 w-full sm:w-1/2">
+          <h3 className="text-start sm:text-end mb-3 border-b border-border-200 pb-2 font-semibold text-heading">
             {t('common:shipping-address')}
           </h3>
 
-          <div className="flex flex-col items-start space-y-1 text-sm text-body text-start sm:items-end sm:text-end">
+          <div className="text-start sm:text-end flex flex-col items-start space-y-1 text-sm text-body sm:items-end">
             <span>{refund?.order?.customer?.name}</span>
             {refund?.order?.shipping_address && (
               <span>{formatAddress(refund.order.shipping_address)}</span>

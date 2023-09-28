@@ -2,13 +2,7 @@ import Pagination from '@/components/ui/pagination';
 import { Table } from '@/components/ui/table';
 import ActionButtons from '@/components/common/action-buttons';
 import dayjs from 'dayjs';
-import {
-  Product,
-  User,
-  SortOrder,
-  Question,
-  MappedPaginatorInfo,
-} from '@/types';
+import { Product, User, SortOrder, Question, MappedPaginatorInfo } from '@/types';
 import Image from 'next/image';
 import { useTranslation } from 'next-i18next';
 import { useIsRTL } from '@/utils/locals';
@@ -30,13 +24,7 @@ export type IProps = {
   onSort: (current: any) => void;
   onOrder: (current: string) => void;
 };
-const QuestionList = ({
-  questions,
-  paginatorInfo,
-  onPagination,
-  onSort,
-  onOrder,
-}: IProps) => {
+const QuestionList = ({ questions, paginatorInfo, onPagination, onSort, onOrder }: IProps) => {
   const { t } = useTranslation();
   const { alignLeft } = useIsRTL();
 
@@ -74,6 +62,7 @@ const QuestionList = ({
         <Image
           src={product?.image?.thumbnail ?? siteSettings.product.placeholder}
           alt={product?.name}
+          layout="fixed"
           width={60}
           height={60}
           className="overflow-hidden rounded"

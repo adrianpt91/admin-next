@@ -59,7 +59,6 @@ interface SearchParamOptions {
   shop_id: string;
   is_approved: boolean;
   tracking_number: string;
-  notice: string;
 }
 
 export class HttpClient {

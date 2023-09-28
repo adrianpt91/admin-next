@@ -60,10 +60,10 @@ export default function CreateOrUpdateCouponForm({ initialValues }: IProps) {
     // @ts-ignore
     defaultValues: initialValues
       ? {
-          ...initialValues,
-          active_from: new Date(initialValues.active_from!),
-          expire_at: new Date(initialValues.expire_at!),
-        }
+        ...initialValues,
+        active_from: new Date(initialValues.active_from!),
+        expire_at: new Date(initialValues.expire_at!),
+      }
       : defaultValues,
     resolver: yupResolver(couponValidationSchema),
   });
@@ -79,6 +79,7 @@ export default function CreateOrUpdateCouponForm({ initialValues }: IProps) {
   const isTranslateCoupon = router.locale !== Config.defaultLanguage;
 
   const onSubmit = async (values: FormValues) => {
+
     const input = {
       language: router.locale,
       type: values.type,
@@ -124,7 +125,7 @@ export default function CreateOrUpdateCouponForm({ initialValues }: IProps) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="flex flex-wrap pb-8 my-5 border-b border-dashed border-border-base sm:my-8">
+      <div className="my-5 flex flex-wrap border-b border-dashed border-border-base pb-8 sm:my-8">
         <Description
           title={t('form:input-label-image')}
           details={t('form:coupon-image-helper-text')}
@@ -136,7 +137,7 @@ export default function CreateOrUpdateCouponForm({ initialValues }: IProps) {
         </Card>
       </div>
 
-      <div className="flex flex-wrap my-5 sm:my-8">
+      <div className="my-5 flex flex-wrap sm:my-8">
         <Description
           title={t('form:input-label-description')}
           details={`${
@@ -210,7 +211,7 @@ export default function CreateOrUpdateCouponForm({ initialValues }: IProps) {
             disabled={isTranslateCoupon}
           />
           <div className="flex flex-col sm:flex-row">
-            <div className="w-full p-0 mb-5 sm:mb-0 sm:w-1/2 sm:pe-2">
+            <div className="mb-5 w-full p-0 sm:mb-0 sm:w-1/2 sm:pe-2">
               <Label>{t('form:coupon-active-from')}</Label>
 
               <Controller

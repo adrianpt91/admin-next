@@ -24,13 +24,7 @@ export type IProps = {
   onSort: (current: any) => void;
   onOrder: (current: string) => void;
 };
-const ReviewList = ({
-  reviews,
-  paginatorInfo,
-  onPagination,
-  onSort,
-  onOrder,
-}: IProps) => {
+const ReviewList = ({ reviews, paginatorInfo, onPagination, onSort, onOrder }: IProps) => {
   const { t } = useTranslation();
   const router = useRouter();
   const { alignLeft } = useIsRTL();
@@ -74,15 +68,14 @@ const ReviewList = ({
       align: alignLeft,
       width: 120,
       render: (product: Product) => (
-        <div className="relative h-[60px] w-[60px]">
-          <Image
-            src={product?.image?.thumbnail ?? siteSettings.product.placeholder}
-            alt={product?.name}
-            fill
-            sizes="(max-width: 768px) 100vw"
-            className="overflow-hidden rounded object-fill"
-          />
-        </div>
+        <Image
+          src={product?.image?.thumbnail ?? siteSettings.product.placeholder}
+          alt={product?.name}
+          layout="fixed"
+          width={60}
+          height={60}
+          className="overflow-hidden rounded"
+        />
       ),
     },
     {

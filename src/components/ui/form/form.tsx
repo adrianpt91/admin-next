@@ -1,7 +1,6 @@
 import type {
   UseFormReturn,
   SubmitHandler,
-  FieldValues,
   UseFormProps,
   Path,
   UnpackNestedValue,
@@ -14,13 +13,13 @@ import { useEffect } from 'react';
 type ServerErrors<T> = {
   [Property in keyof T]: string;
 };
-type FormProps<TFormValues extends FieldValues> = {
+type FormProps<TFormValues> = {
   onSubmit: SubmitHandler<TFormValues>;
   children: (methods: UseFormReturn<TFormValues>) => React.ReactNode;
   options?: UseFormProps<TFormValues>;
   validationSchema?: SchemaOf<TFormValues>;
   serverError?: ServerErrors<Partial<TFormValues>> | null;
-  resetValues?: any | null;
+  resetValues?: UnpackNestedValue<DeepPartial<TFormValues>> | null;
   className?: string;
   [key: string]: unknown;
 };

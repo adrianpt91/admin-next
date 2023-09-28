@@ -41,7 +41,7 @@ const CouponList = ({
   const { t } = useTranslation();
   const router = useRouter();
 
-  console.log(coupons, 'cop data');
+  console.log(coupons, 'cop data')
   const [sortingObj, setSortingObj] = useState<{
     sort: SortOrder;
     column: string | null;
@@ -82,6 +82,7 @@ const CouponList = ({
         <Image
           src={image?.thumbnail ?? siteSettings.product.placeholder}
           alt="coupon banner"
+          layout="fixed"
           width={42}
           height={42}
           className="overflow-hidden rounded"
@@ -138,8 +139,7 @@ const CouponList = ({
         <TitleWithSort
           title={t('table:table-item-minimum-amount')}
           ascending={
-            sortingObj.sort === SortOrder.Asc &&
-            sortingObj.column === 'minimum_cart_amount'
+            sortingObj.sort === SortOrder.Asc && sortingObj.column === 'minimum_cart_amount'
           }
           isActive={sortingObj.column === 'minimum_cart_amount'}
         />

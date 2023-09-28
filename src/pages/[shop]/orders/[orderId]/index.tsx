@@ -15,12 +15,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import SelectInput from '@/components/ui/select-input';
 import ShopLayout from '@/components/layouts/shop';
 import { useIsRTL } from '@/utils/locals';
-import {
-  adminOnly,
-  adminOwnerAndStaffOnly,
-  getAuthCredentials,
-  hasAccess,
-} from '@/utils/auth-utils';
+import { adminOwnerAndStaffOnly } from '@/utils/auth-utils';
 import {
   useDownloadInvoiceMutation,
   useUpdateOrderMutation,
@@ -31,9 +26,6 @@ import { DownloadIcon } from '@/components/icons/download-icon';
 import OrderViewHeader from '@/components/order/order-view-header';
 import { ORDER_STATUS } from '@/utils/order-status';
 import OrderStatusProgressBox from '@/components/order/order-status-progress-box';
-import { Routes } from '@/config/routes';
-import { useShopQuery } from '@/data/shop';
-import { useMeQuery } from '@/data/user';
 
 type FormValues = {
   order_status: any;
@@ -41,13 +33,6 @@ type FormValues = {
 export default function OrderDetailsPage() {
   const { t } = useTranslation();
   const { locale, query } = useRouter();
-  const router = useRouter();
-  const { permissions } = getAuthCredentials();
-  const { data: me } = useMeQuery();
-  const { data: shopData } = useShopQuery({
-    slug: query?.shop as string,
-  });
-  const shopId = shopData?.id!;
   const { alignLeft, alignRight, isRTL } = useIsRTL();
   const { mutate: updateOrder, isLoading: updating } = useUpdateOrderMutation();
   const {
@@ -127,6 +112,7 @@ export default function OrderDetailsPage() {
         <Image
           src={image?.thumbnail ?? siteSettings.product.placeholder}
           alt="alt text"
+          layout="fixed"
           width={50}
           height={50}
         />
@@ -161,18 +147,10 @@ export default function OrderDetailsPage() {
     },
   ];
 
-  if (
-    !hasAccess(adminOnly, permissions) &&
-    !me?.shops?.map((shop) => shop.id).includes(shopId) &&
-    me?.managed_shop?.id != shopId
-  ) {
-    router.replace(Routes.dashboard);
-  }
-
   return (
     <div>
       <Card>
-        <div className="mb-6 -mt-5 -ml-5 -mr-5 md:-mr-8 md:-ml-8 md:-mt-8">
+        <div className="mb-6 -mr-5 -ml-5 -mt-5 md:-mr-8 md:-ml-8  md:-mt-8">
           <OrderViewHeader order={order} wrapperClassName="px-8 py-4" />
         </div>
         <div className="flex w-full">
@@ -180,13 +158,13 @@ export default function OrderDetailsPage() {
             onClick={handleDownloadInvoice}
             className="mb-5 bg-blue-500 ltr:ml-auto rtl:mr-auto"
           >
-            <DownloadIcon className="w-4 h-4 me-3" />
+            <DownloadIcon className="h-4 w-4 me-3" />
             {t('common:text-download')} {t('common:text-invoice')}
           </Button>
         </div>
 
         <div className="flex flex-col items-center lg:flex-row">
-          <h3 className="w-full mb-8 text-2xl font-semibold text-center whitespace-nowrap text-heading lg:mb-0 lg:w-1/3 lg:text-start">
+          <h3 className="mb-8 w-full whitespace-nowrap text-center text-2xl font-semibold text-heading lg:mb-0 lg:w-1/3 lg:text-start">
             {t('form:input-label-order-id')} - {order?.tracking_number}
           </h3>
 
@@ -194,7 +172,7 @@ export default function OrderDetailsPage() {
             order?.order_status !== OrderStatus.CANCELLED && (
               <form
                 onSubmit={handleSubmit(ChangeStatus)}
-                className="flex items-start w-full ms-auto lg:w-2/4"
+                className="flex w-full items-start ms-auto lg:w-2/4"
               >
                 <div className="z-20 w-full me-5">
                   <SelectInput
@@ -220,7 +198,7 @@ export default function OrderDetailsPage() {
             )}
         </div>
 
-        <div className="flex items-center justify-center my-5 lg:my-10">
+        <div className="my-5 flex items-center justify-center lg:my-10">
           <OrderStatusProgressBox
             orderStatus={order?.order_status as OrderStatus}
             paymentStatus={order?.payment_status as PaymentStatus}
@@ -242,7 +220,7 @@ export default function OrderDetailsPage() {
             <span>{t('common:no-order-found')}</span>
           )}
 
-          <div className="flex flex-col w-full px-4 py-4 space-y-2 border-t-4 border-double border-border-200 ms-auto sm:w-1/2 md:w-1/3">
+          <div className="flex w-full flex-col space-y-2 border-t-4 border-double border-border-200 px-4 py-4 ms-auto sm:w-1/2 md:w-1/3">
             <div className="flex items-center justify-between text-sm text-body">
               <span>{t('common:order-sub-total')}</span>
               <span>{subtotal}</span>
@@ -267,8 +245,8 @@ export default function OrderDetailsPage() {
         </div>
 
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between">
-          <div className="w-full mb-10 sm:mb-0 sm:w-1/2 sm:pe-8">
-            <h3 className="pb-2 mb-3 font-semibold border-b border-border-200 text-heading">
+          <div className="mb-10 w-full sm:mb-0 sm:w-1/2 sm:pe-8">
+            <h3 className="mb-3 border-b border-border-200 pb-2 font-semibold text-heading">
               {t('common:billing-address')}
             </h3>
 
@@ -284,7 +262,7 @@ export default function OrderDetailsPage() {
           </div>
 
           <div className="w-full sm:w-1/2 sm:ps-8">
-            <h3 className="pb-2 mb-3 font-semibold border-b border-border-200 text-heading text-start sm:text-end">
+            <h3 className="mb-3 border-b border-border-200 pb-2 font-semibold text-heading text-start sm:text-end">
               {t('common:shipping-address')}
             </h3>
 

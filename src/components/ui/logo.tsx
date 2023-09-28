@@ -23,11 +23,10 @@ const Logo: React.FC<React.AnchorHTMLAttributes<{}>> = ({
         }}
       >
         <Image
-          src={logo?.original ?? siteSettings.logo.url}
+          src='/logo.png'
           alt={siteTitle ?? siteSettings.logo.alt}
-          fill
-          sizes="(max-width: 768px) 100vw"
-          className="object-contain"
+          layout="fill"
+          objectFit="contain"
           loading="eager"
         />
       </span>

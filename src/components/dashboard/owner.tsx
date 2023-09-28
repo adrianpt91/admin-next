@@ -1,105 +1,51 @@
+import ErrorMessage from '@/components/ui/error-message';
+import Loader from '@/components/ui/loader/loader';
 import { useTranslation } from 'next-i18next';
-import { Fragment } from 'react';
-import { Tab } from '@headlessui/react';
-import cn from 'classnames';
-import dynamic from 'next/dynamic';
-import { useRouter } from 'next/router';
-import { isEmpty } from 'lodash';
-const ShopList = dynamic(() => import('@/components/dashboard/shops/shops'));
-const Message = dynamic(() => import('@/components/dashboard/shops/message'));
-const StoreNotices = dynamic(
-  () => import('@/components/dashboard/shops/store-notices')
-);
-import { adminOnly, getAuthCredentials, hasAccess } from '@/utils/auth-utils';
+import Image from 'next/image';
+import { useMeQuery } from '@/data/user';
+import ShopCard from '@/components/shop/shop-card';
+import NoShopSvg from '../../../public/no-shop.svg';
 
-const tabList = [
-  {
-    title: 'common:sidebar-nav-item-my-shops',
-    children: 'ShopList',
-  },
-  {
-    title: 'common:sidebar-nav-item-message',
-    children: 'Message',
-  },
-  {
-    title: 'common:sidebar-nav-item-store-notice',
-    children: 'StoreNotices',
-  },
-];
-
-const MAP_PAGE_LIST: Record<string, any> = {
-  ShopList: ShopList,
-  Message: Message,
-  StoreNotices: StoreNotices,
-};
-
-const OwnerShopLayout = () => {
+export default function OwnerDashboard() {
   const { t } = useTranslation();
-  const router = useRouter();
-  const { query } = router;
+  const { data, isLoading: loading, error } = useMeQuery();
 
-  const classNames = {
-    basic:
-      'lg:text-[1.375rem] font-semibold border-b-2 border-solid border-transparent lg:pb-5 pb-3 -mb-0.5',
-    selected: 'text-accent hover:text-accent-hover border-current',
-    normal: 'hover:text-black/80',
-  };
-
+  if (loading) return <Loader text={t('common:text-loading')} />;
+  if (error) return <ErrorMessage message={error.message} />;
   return (
     <>
-      <Tab.Group
-        defaultIndex={
-          !isEmpty(query?.tab) && query?.tab ? Number(query?.tab) : 0
-        }
-        onChange={(index: any) => {
-          router.push({
-            query: { tab: index },
-          });
-        }}
-      >
-        <Tab.List className="flex flex-wrap gap-x-9 border-b-2 border-solid border-b-[#E4E1E7]">
-          {tabList?.map((tab, key) => {
-            let { title } = tab;
-            return (
-              <Tab as={Fragment} key={key}>
-                {({ selected }) => (
-                  <button
-                    className={cn(
-                      selected ? classNames?.selected : classNames?.normal,
-                      classNames?.basic
-                    )}
-                  >
-                    {t(title)}
-                  </button>
-                )}
-              </Tab>
-            );
-          })}
-        </Tab.List>
-        <Tab.Panels
-          className="mt-4 lg:mt-8"
-          style={{ height: 'calc(100% - 94px)' }}
-        >
-          {tabList?.map((tab, key) => {
-            let { children } = tab;
-            const Component = MAP_PAGE_LIST[children];
-            return (
-              <Tab.Panel key={key} className="h-full">
-                <Component />
-              </Tab.Panel>
-            );
-          })}
-        </Tab.Panels>
-      </Tab.Group>
+      <div className="mb-5 border-b border-dashed border-border-base pb-8 sm:mb-8">
+        <h1 className="text-lg font-semibold text-heading">
+          {t('common:sidebar-nav-item-my-shops')}
+        </h1>
+      </div>
+
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 3xl:grid-cols-5">
+        {data?.shops?.map((myShop: any, idx: number) => (
+          <ShopCard shop={myShop} key={idx} />
+        ))}
+      </div>
+
+      {!data?.managed_shop && !data?.shops?.length ? (
+        <div className="flex w-full flex-col items-center p-10">
+          <div className="relative h-[180px] w-[300px] sm:h-[370px] sm:w-[490px]">
+            <Image
+              alt={t('common:text-image')}
+              src={NoShopSvg}
+              layout="fill"
+              objectFit="cover"
+            />
+          </div>
+          <span className="mt-6 text-center text-lg font-semibold text-body-dark sm:mt-10">
+            {t('common:text-no-shop')}
+          </span>
+        </div>
+      ) : null}
+      {!!data?.managed_shop ? (
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 3xl:grid-cols-5">
+          <ShopCard shop={data?.managed_shop} />
+        </div>
+      ) : null}
     </>
   );
-};
-
-const OwnerDashboard = () => {
-  const { permissions } = getAuthCredentials();
-  let permission = hasAccess(adminOnly, permissions);
-
-  return permission ? <ShopList /> : <OwnerShopLayout />;
-};
-
-export default OwnerDashboard;
+}

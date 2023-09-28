@@ -101,9 +101,7 @@ export default function Uploader({
     // let filename, fileType, isImage;
     if (file && file.id) {
       // const processedFile = processFileWithName(file);
-      const splitArray = file?.file_name
-        ? file?.file_name.split('.')
-        : file?.thumbnail?.split('.');
+      const splitArray = file?.file_name?.split('.');
       const fileType = splitArray?.pop(); // it will pop the last item from the fileSplitName arr which is the file ext
       const filename = splitArray?.join('.'); // it will join the array with dot, which restore the original filename
       const isImage = file?.thumbnail && imgTypes.includes(fileType); // check if the original filename has the img ext
@@ -125,7 +123,7 @@ export default function Uploader({
         >
           {/* {file?.thumbnail && isImage ? ( */}
           {isImage ? (
-            // <div className="flex items-center justify-center w-16 h-16 min-w-0 overflow-hidden">
+            // <div className="flex h-16 w-16 min-w-0 items-center justify-center overflow-hidden">
             //   <Image
             //     src={file.thumbnail}
             //     width={56}
@@ -137,9 +135,8 @@ export default function Uploader({
               <Image
                 src={file.thumbnail}
                 alt={filename}
-                fill
-                sizes="(max-width: 768px) 100vw"
-                className="object-contain"
+                layout="fill"
+                objectFit="contain"
               />
             </figure>
           ) : (
@@ -211,7 +208,7 @@ export default function Uploader({
           )}
         </p>
         {error && (
-          <p className="mt-4 text-center text-sm text-red-600 text-body">
+          <p className="mt-4 text-center text-sm text-body text-red-600">
             {error}
           </p>
         )}

@@ -32,9 +32,6 @@ export const useCreateProductMutation = () => {
     onSettled: () => {
       queryClient.invalidateQueries(API_ENDPOINTS.PRODUCTS);
     },
-    onError: (error: any) => {
-      toast.error(t(`common:${error?.response?.data.message}`));
-    },
   });
 };
 
@@ -47,21 +44,14 @@ export const useUpdateProductMutation = () => {
       const generateRedirectUrl = router.query.shop
         ? `/${router.query.shop}${Routes.product.list}`
         : Routes.product.list;
-      await router.push(
-        `${generateRedirectUrl}/${data?.slug}/edit`,
-        undefined,
-        {
-          locale: Config.defaultLanguage,
-        }
-      );
+      await router.push(`${generateRedirectUrl}/${data?.slug}/edit`, undefined, {
+        locale: Config.defaultLanguage,
+      });
       toast.success(t('common:successfully-updated'));
     },
     // Always refetch after error or success:
     onSettled: () => {
       queryClient.invalidateQueries(API_ENDPOINTS.PRODUCTS);
-    },
-    onError: (error: any) => {
-      toast.error(t(`common:${error?.response?.data.message}`));
     },
   });
 };
@@ -76,9 +66,6 @@ export const useDeleteProductMutation = () => {
     // Always refetch after error or success:
     onSettled: () => {
       queryClient.invalidateQueries(API_ENDPOINTS.PRODUCTS);
-    },
-    onError: (error: any) => {
-      toast.error(t(`common:${error?.response?.data.message}`));
     },
   });
 };

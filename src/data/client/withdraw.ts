@@ -19,7 +19,6 @@ export const withdrawClient = {
   },
   paginated: ({ shop_id, ...params }: Partial<WithdrawQueryOptions>) => {
     return HttpClient.get<WithdrawPaginator>(API_ENDPOINTS.WITHDRAWS, {
-      shop_id,
       searchJoin: 'and',
       ...params,
       search: HttpClient.formatSearchParams({ shop_id }),

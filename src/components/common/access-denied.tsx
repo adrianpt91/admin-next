@@ -11,8 +11,7 @@ const AccessDeniedPage = () => {
         <Image
           alt={t('text-access-denied')}
           src="/access-denied.svg"
-          fill
-          sizes="(max-width: 768px) 100vw"
+          layout="fill"
         />
       </div>
 
@@ -24,7 +23,7 @@ const AccessDeniedPage = () => {
 
         <Link
           href="/"
-          className="text-accent transition-colors ps-1 hover:text-accent-hover"
+          className="ps-1 text-accent transition-colors hover:text-accent-hover"
         >
           {t('text-return-home')}
         </Link>

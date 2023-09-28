@@ -6,24 +6,14 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import ShopLayout from '@/components/layouts/shop';
 import { useRouter } from 'next/router';
 import StaffList from '@/components/shop/staff-list';
-import {
-  adminAndOwnerOnly,
-  adminOnly,
-  getAuthCredentials,
-  hasAccess,
-} from '@/utils/auth-utils';
+import { adminAndOwnerOnly } from '@/utils/auth-utils';
 import ErrorMessage from '@/components/ui/error-message';
 import { useShopQuery } from '@/data/shop';
 import { useStaffsQuery } from '@/data/staff';
 import { useState } from 'react';
 import { SortOrder } from '@/types';
-import { Routes } from '@/config/routes';
-import { useMeQuery } from '@/data/user';
 
 export default function StaffsPage() {
-  const router = useRouter();
-  const { permissions } = getAuthCredentials();
-  const { data: me } = useMeQuery();
   const {
     query: { shop },
   } = useRouter();
@@ -60,15 +50,6 @@ export default function StaffsPage() {
   function handlePagination(current: any) {
     setPage(current);
   }
-
-  if (
-    !hasAccess(adminOnly, permissions) &&
-    !me?.shops?.map((shop) => shop.id).includes(shopId) &&
-    me?.managed_shop?.id != shopId
-  ) {
-    router.replace(Routes.dashboard);
-  }
-
   return (
     <>
       <Card className="mb-8 flex flex-row items-center justify-between">
@@ -78,8 +59,8 @@ export default function StaffsPage() {
           </h1>
         </div>
 
-        <div className="flex w-3/4 items-center ms-auto xl:w-2/4">
-          <LinkButton href={`/${shop}/staffs/create`} className="h-12 ms-auto">
+        <div className="ms-auto flex w-3/4 items-center xl:w-2/4">
+          <LinkButton href={`/${shop}/staffs/create`} className="ms-auto h-12">
             <span>+ {t('form:button-label-add-staff')}</span>
           </LinkButton>
         </div>
